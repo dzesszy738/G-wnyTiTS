@@ -86,6 +86,8 @@ namespace Logowanie.Controllers
                 IdentityResult result = await _userManager.CreateAsync(user, model.Hasło);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "Pacjent");
+
                     string ctoken = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
                     string ctokenlink = Url.Action("ConfirmEmail", "Account", new
                     {
