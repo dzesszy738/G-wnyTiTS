@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Authorization;
 using Logowanie.Models.AccountViewModels;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Diagnostics;
+using System.Text;
 
 namespace Logowanie.Controllers
 {
@@ -17,6 +22,9 @@ namespace Logowanie.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
+        const string DOMAIN = "sandbox915dc42a586d45a2afccef193af0eee8.mailgun.org";
+        const string API_KEY = "f0b8649cda7531f100a399133a846159-b3780ee5-eb6d9383";
+
 
         public AccountController(
                     UserManager<ApplicationUser> userManager,
@@ -73,6 +81,37 @@ namespace Logowanie.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
+        
+
+        public void Test1(string to,string text)
+        {
+            Test1Async(to,text).Wait();
+        }
+
+        public async Task Test1Async(string to, string text)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(UTF8Encoding.UTF8.GetBytes("api" + ":" + API_KEY)));
+
+
+            var form = new Dictionary<string, string>();
+            form["from"] = "prywatna.przychodnia@tits.com";
+            form["to"] = to;
+            form["subject"] = "Weryfikacja konta";
+            form["text"] = "W celu weryfikacji adresu email prosimy o kliknięcie w poniższy link:"+"\n"+text;
+
+            var response = await client.PostAsync("https://api.mailgun.net/v2/" + DOMAIN + "/messages", new FormUrlEncodedContent(form));
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Debug.WriteLine("Success");
+            }
+            else
+            {
+                Debug.WriteLine("StatusCode: " + response.StatusCode);
+                Debug.WriteLine("ReasonPhrase: " + response.ReasonPhrase);
+            }
+        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -93,6 +132,7 @@ namespace Logowanie.Controllers
                         token = ctoken
                     }, protocol: HttpContext.Request.Scheme);
                     ViewBag.token = ctokenlink;
+                    Test1(model.Email, ctokenlink);
 
 
 
