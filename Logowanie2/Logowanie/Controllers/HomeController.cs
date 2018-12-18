@@ -18,10 +18,10 @@ namespace Logowanie.Controllers
 
             if(User.HasClaim(ClaimTypes.Role, "Admin"))
             {
-                return View("Admin/Index");
+                return RedirectToAction("Index","Admin");
             }
-           
 
+            
             return View();
         }
 

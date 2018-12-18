@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Caffeinated.Toolbox.Web.Security.WinNtAuthentication" Version="1.0.0" />
+    <PackageReference Include="Cogito.Web.UI" Version="3.0.0" />
     <PackageReference Include="FluentCache.Microsoft.Extensions.Caching.Abstractions" Version="4.0.0.2" />
     <PackageReference Include="IdeaTech.System.Web.Mvc.Extensions" Version="1.0.5" />
     <PackageReference Include="Microsoft.AspNet.Mvc-vHalfNext" Version="5.5.13" />
