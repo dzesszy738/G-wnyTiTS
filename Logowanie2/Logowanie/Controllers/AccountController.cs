@@ -22,8 +22,8 @@ namespace Logowanie.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
-        const string DOMAIN = "sandbox915dc42a586d45a2afccef193af0eee8.mailgun.org";
-        const string API_KEY = "f0b8649cda7531f100a399133a846159-b3780ee5-eb6d9383";
+        const string DOMAIN = "sandboxf32fec52ba8b49549f919be99b52b105.mailgun.org";
+        const string API_KEY = "a78b246793a4698f16fc332a1d7ed247-9b463597-e06c53a6";
 
 
         public AccountController(
@@ -81,24 +81,24 @@ namespace Logowanie.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
-        
 
-        public void Test1(string to,string text)
+
+        public void Test1(string to, string text, string sub)
         {
-            Test1Async(to,text).Wait();
+            Test1Async(to, text, sub).Wait();
         }
 
-        public async Task Test1Async(string to, string text)
+        public async Task Test1Async(string to, string text, string sub)
         {
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(UTF8Encoding.UTF8.GetBytes("api" + ":" + API_KEY)));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes("api" + ":" + API_KEY)));
 
 
             var form = new Dictionary<string, string>();
             form["from"] = "prywatna.przychodnia@tits.com";
             form["to"] = to;
-            form["subject"] = "Weryfikacja konta";
-            form["text"] = "W celu weryfikacji adresu email prosimy o kliknięcie w poniższy link:"+"\n"+text;
+            form["subject"] = sub;
+            form["text"] = text;
 
             var response = await client.PostAsync("https://api.mailgun.net/v2/" + DOMAIN + "/messages", new FormUrlEncodedContent(form));
 
@@ -132,11 +132,8 @@ namespace Logowanie.Controllers
                         token = ctoken
                     }, protocol: HttpContext.Request.Scheme);
                     ViewBag.token = ctokenlink;
-                    Test1(model.Email, ctokenlink);
-
-
-
-
+                    string sub = "Weryfikacja adresu email";
+                    Test1(user.Email, "W celu weryfikacji adresu email prosimy o kliknięcie w link: " + ctokenlink, sub);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
@@ -148,6 +145,10 @@ namespace Logowanie.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+        public IActionResult ForgotPassword()
+        {
+            return View();
         }
         [HttpGet]
         [AllowAnonymous]
@@ -205,6 +206,38 @@ namespace Logowanie.Controllers
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public IActionResult ChangePassword(ForgottPassword model)
+        {
+            var user = _userManager.
+                FindByNameAsync(model.Email).Result;
+
+            if (user == null || !(_userManager.
+                  IsEmailConfirmedAsync(user).Result))
+            {
+                ViewBag.Message = "Error while resetting your password!";
+                return View("Error");
+            }
+
+            var token = _userManager.
+                  GeneratePasswordResetTokenAsync(user).Result;
+
+            var resetLink = Url.Action("ResetPassword",
+                            "Account", new { token = token },
+                             protocol: HttpContext.Request.Scheme);
+            ViewBag.token = resetLink;
+            Test1(user.Email, "W celu zresetowania hasła prosimy o kliknięcie w link: " + resetLink, "Zmiana hasła");
+
+
+            // code to email the above link
+            // see the earlier article
+
+
+            return View("Reset");
+
         }
 
         public IActionResult Index()
