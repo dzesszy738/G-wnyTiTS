@@ -29,8 +29,7 @@ namespace Logowanie.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
-        const string DOMAIN = "sandboxf32fec52ba8b49549f919be99b52b105.mailgun.org";
-        const string API_KEY = "a78b246793a4698f16fc332a1d7ed247-9b463597-e06c53a6";
+        
 
 
         public AccountController(
@@ -247,7 +246,7 @@ namespace Logowanie.Controllers
                             "Account", new { token = token },
                              protocol: HttpContext.Request.Scheme);
             ViewBag.token = resetLink;
-            Test1(user.Email, "W celu zresetowania hasła prosimy o kliknięcie w link: " + resetLink, "Zmiana hasła");
+            Test1(user.Email, $"W celu zresetowania hasła prosimy o kliknięcie w link: <a href='{resetLink}'>link</a>", "Zmiana hasła");
 
 
             // code to email the above link
