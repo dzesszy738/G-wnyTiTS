@@ -9,11 +9,15 @@ using Microsoft.AspNetCore.Authorization;
 using Logowanie.Models.AccountViewModels;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Logowanie.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Logowanie.Controllers
 {
     public class AccountController : Controller
     {
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
@@ -61,6 +65,7 @@ namespace Logowanie.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
+
             if (userId == null || token == null)
             {
                 return View("Error");
@@ -113,6 +118,7 @@ namespace Logowanie.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
+
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
@@ -127,15 +133,21 @@ namespace Logowanie.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+           
+
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+              
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Hasło, model.Zapamiętaj, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                   
+                    
                     _logger.LogInformation("User logged in.");
+                  
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.IsLockedOut)

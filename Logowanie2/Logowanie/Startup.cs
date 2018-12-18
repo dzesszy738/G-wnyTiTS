@@ -36,9 +36,21 @@ namespace Logowanie
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+        
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Add Role",
+                    policy => policy.RequireClaim("Can add roles", "add.role"));
+                options.AddPolicy("Edit Role",
+                    policy => policy.RequireClaim("Can edit roles", "edit.role"));
+                options.AddPolicy("Delete Role",
+                    policy => policy.RequireClaim("Can delete roles", "delete.role"));
+            });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
            .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -73,35 +85,6 @@ namespace Logowanie
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-        private async Task CreateUserRoles(IServiceProvider serviceProvider)
-        {
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-            IdentityResult roleResult;
-
-
-            string[] roleNames = { "Pacjent", "Recepcjonistka", "Lekarz" };
-            foreach (var roleName in roleNames)
-            {
-                var roleExist = await RoleManager.RoleExistsAsync(roleName);
-                if (!roleExist)
-                {
-                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
-                }
-            }
-
-            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
-            if (!roleCheck)
-            {
-                //create the roles and seed them to the database
-                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
-
-            }
-            ApplicationUser user = await UserManager.FindByEmailAsync("prywatna_przychodnia@adres.pl");
-            var User = new ApplicationUser();
-            await UserManager.AddToRoleAsync(user, "Admin");
-
-        }
+      
     }
 }
