@@ -23,5 +23,14 @@ namespace Logowanie.Models.AccountViewModels
         [Display(Name = "Powtórz hasło")]
         [Compare("Hasło", ErrorMessage = "Hasła się nie zgadzają")]
         public string ConfirmPassword { get; set; }
+
+        public Rola Role { get; set; }
     }
+
+    public enum Rola
+    {
+        Recepcjonistka,
+        Lekarz
+   }
+    
 }

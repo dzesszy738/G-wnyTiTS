@@ -5,13 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Logowanie.Models;
+using System.Security.Claims;
 
 namespace Logowanie.Controllers
 {
     public class HomeController : Controller
     {
+        
+      
         public IActionResult Index()
         {
+
+            if(User.HasClaim(ClaimTypes.Role, "Admin"))
+            {
+                return RedirectToAction("Index","Admin");
+            }
+
+            
             return View();
         }
 
