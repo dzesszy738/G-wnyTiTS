@@ -77,8 +77,10 @@ namespace Logowanie
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCookiePolicy();
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+            .CreateScope())
 
-            app.UseMvc(routes =>
+                app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",

@@ -19,7 +19,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Diagnostics;
 using System.Text;
-
+using Logowanie.Data;
 
 namespace Logowanie.Controllers
 {
@@ -29,15 +29,18 @@ namespace Logowanie.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
-        const string DOMAIN = "sandbox915dc42a586d45a2afccef193af0eee8.mailgun.org";
-        const string API_KEY = "f0b8649cda7531f100a399133a846159-b3780ee5-eb6d9383";
-
+      
+        const string DOMAIN = "sandboxf32fec52ba8b49549f919be99b52b105.mailgun.org";
+        const string API_KEY = "key-127838fb2cddb669a738dfb56e328bc3";
+        ApplicationDbContext _db;
+       
 
         public AccountController(
                     UserManager<ApplicationUser> userManager,
                     SignInManager<ApplicationUser> signInManager,
-                    ILogger<AccountController> logger)
+                    ILogger<AccountController> logger,ApplicationDbContext db)
         {
+            _db = db;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -124,8 +127,9 @@ namespace Logowanie.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl)
         {
+            returnUrl = null;
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
@@ -134,8 +138,13 @@ namespace Logowanie.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Pacjent");
-                 
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Pacjent"));
 
+                    Pacjent p = new Pacjent();
+                    p.Email = user.Email;
+                    _db.Add(p);
+
+                    _db.SaveChanges();
                     string ctoken = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
                     string ctokenlink = Url.Action("ConfirmEmail", "Account", new
                     {
@@ -143,7 +152,8 @@ namespace Logowanie.Controllers
                         token = ctoken
                     }, protocol: HttpContext.Request.Scheme);
                     ViewBag.token = ctokenlink;
-                    Test1(model.Email, ctokenlink);
+
+                   // Test1(model.Email, ctokenlink);
 
 
 
