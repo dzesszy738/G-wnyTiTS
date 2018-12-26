@@ -14,6 +14,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Diagnostics;
 using System.Text;
+using System.Net.Mail;
+using System.Security.Cryptography;
 
 namespace Logowanie.Controllers
 {
@@ -22,8 +24,8 @@ namespace Logowanie.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
-        
 
+        
 
         public AccountController(
                     UserManager<ApplicationUser> userManager,
@@ -206,10 +208,37 @@ namespace Logowanie.Controllers
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+        
+
+ [HttpPost]
+        public ActionResult ResetPassword(ForgottPassword model)
+        {
+            //if (ModelState.IsValid)
+            //{
+
+            //    if (_userManager.HasPasswordAsync(_userManager.)
+            //    {
+            //        _userManager.RemovePassword(model.UserId);
+            //        _userManager.AddPassword(model.UserId, model.ConfirmPassword);
+
+            //    }
+
+            //    TempData["Message"] = "Password successfully reset to " + model.ConfirmPassword;
+            //    TempData["MessageValue"] = "1";
+
+            //    return RedirectToAction("UsersWithRoles", "ManageUsers", new { area = "", });
+            //}
+
+            //// If we got this far, something failed, redisplay form
+            //TempData["Message"] = "Invalid User Details. Please try again in some minutes ";
+            //TempData["MessageValue"] = "0";
+            //return RedirectToAction("UsersWithRoles", "ManageUsers", new { area = "", });
+            return View("ResetPassword");
+        }
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult ChangePassword(ForgottPassword model)
+        public async Task<IActionResult> ChangePassword(ForgottPassword model, LoginViewModel model2)
         {
             var user = _userManager.
                 FindByNameAsync(model.Email).Result;
@@ -221,22 +250,40 @@ namespace Logowanie.Controllers
                 return View("Error");
             }
 
-            var token = _userManager.
+            var ctoken = _userManager.
                   GeneratePasswordResetTokenAsync(user).Result;
 
             var resetLink = Url.Action("ResetPassword",
-                            "Account", new { token = token },
+                            "Account", new { token = ctoken },
                              protocol: HttpContext.Request.Scheme);
             ViewBag.token = resetLink;
-            Test1(user.Email, $"W celu zresetowania hasła prosimy o kliknięcie w link: <a href='{resetLink}'>link</a>", "Zmiana hasła");
 
+            string nowehaslo = GetUniqueKey(10)+"*";
 
-            // code to email the above link
-            // see the earlier article
-
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, ctoken, nowehaslo);
+            
+            //model2.Hasło = nowehaslo;
+            Test1(user.Email, "Oto twoje nowe hasło: "+nowehaslo, "Zmiana hasła");
 
             return View("Reset");
 
+        }
+        public static string GetUniqueKey(int maxSize)
+        {
+            char[] chars = new char[62];
+            chars =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            byte[] data = new byte[1];
+            RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
+            crypto.GetBytes(data);
+            data = new byte[maxSize];
+            crypto.GetBytes(data);
+            StringBuilder result = new StringBuilder(maxSize);
+            foreach (byte b in data)
+            {
+                result.Append(chars[b % (chars.Length)]);
+            }
+            return result.ToString();
         }
 
         public IActionResult Index()
