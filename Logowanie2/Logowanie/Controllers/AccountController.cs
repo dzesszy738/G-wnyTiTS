@@ -213,26 +213,7 @@ namespace Logowanie.Controllers
  [HttpPost]
         public ActionResult ResetPassword(ForgottPassword model)
         {
-            //if (ModelState.IsValid)
-            //{
-
-            //    if (_userManager.HasPasswordAsync(_userManager.)
-            //    {
-            //        _userManager.RemovePassword(model.UserId);
-            //        _userManager.AddPassword(model.UserId, model.ConfirmPassword);
-
-            //    }
-
-            //    TempData["Message"] = "Password successfully reset to " + model.ConfirmPassword;
-            //    TempData["MessageValue"] = "1";
-
-            //    return RedirectToAction("UsersWithRoles", "ManageUsers", new { area = "", });
-            //}
-
-            //// If we got this far, something failed, redisplay form
-            //TempData["Message"] = "Invalid User Details. Please try again in some minutes ";
-            //TempData["MessageValue"] = "0";
-            //return RedirectToAction("UsersWithRoles", "ManageUsers", new { area = "", });
+           
             return View("ResetPassword");
         }
         [HttpPost]
@@ -253,10 +234,7 @@ namespace Logowanie.Controllers
             var ctoken = _userManager.
                   GeneratePasswordResetTokenAsync(user).Result;
 
-            var resetLink = Url.Action("ResetPassword",
-                            "Account", new { token = ctoken },
-                             protocol: HttpContext.Request.Scheme);
-            ViewBag.token = resetLink;
+          
 
             string nowehaslo = GetUniqueKey(10)+"*";
 
