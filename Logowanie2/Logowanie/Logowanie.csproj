@@ -9,6 +9,8 @@
     <PackageReference Include="Cogito.Web.UI" Version="3.0.0" />
     <PackageReference Include="FluentCache.Microsoft.Extensions.Caching.Abstractions" Version="4.0.0.2" />
     <PackageReference Include="IdeaTech.System.Web.Mvc.Extensions" Version="1.0.5" />
+    <PackageReference Include="Korzh.EasyQuery.Core" Version="3.8.0.35" />
+    <PackageReference Include="Korzh.EasyQuery.Linq" Version="4.4.1" />
     <PackageReference Include="Microsoft.AspNet.Mvc-vHalfNext" Version="5.5.13" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />

@@ -20,6 +20,10 @@ namespace Logowanie.Controllers
             {
                 return RedirectToAction("Index","Admin");
             }
+            if(User.HasClaim(ClaimTypes.Role,"Recepcjonistka"))
+            {
+                return RedirectToAction("IndexAsync", "Rejestratorka");
+            }
 
             
             return View();

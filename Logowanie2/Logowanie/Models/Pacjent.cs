@@ -29,7 +29,9 @@ namespace Logowanie.Models
         public string Nazwisko { get; set; }
 
       
-        [DataType(DataType.Date)]
+       
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+
         public DateTime DataUr { get; set; }
        
         [EmailAddress]
