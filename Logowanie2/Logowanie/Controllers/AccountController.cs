@@ -27,7 +27,7 @@ namespace Logowanie.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
-        
+       
 
         public AccountController(
                     UserManager<ApplicationUser> userManager,
