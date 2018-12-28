@@ -7,15 +7,28 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Logowanie.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Logowanie.Models;
+using Microsoft.AspNetCore.Http;
+using System.Web.Http;
+
+
 
 namespace Logowanie
 {
     public class Program
     {
+        
+
         public static void Main(string[] args)
         {
+            
             CreateWebHostBuilder(args).Build().Run();
+
         }
+
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
