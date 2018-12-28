@@ -5,7 +5,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @using System.Security.Claims;
 
-    @if (SignInManager.IsSignedIn(User) && !(User.HasClaim(ClaimTypes.Role, "Admin"))&& !(User.HasClaim(ClaimTypes.Role, "Recepcjonistka"))
+    @if (SignInManager.IsSignedIn(User) && !(User.HasClaim(ClaimTypes.Role, "Admin"))&& !(User.HasClaim(ClaimTypes.Role, "Recepcjonistka")))
     {
         <ul class="nav navbar-nav navbar-left">
 
