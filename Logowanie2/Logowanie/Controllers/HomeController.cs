@@ -6,13 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Logowanie.Models;
 using System.Security.Claims;
+using Logowanie.Data;
 
 namespace Logowanie.Controllers
 {
     public class HomeController : Controller
     {
-        
-      
+        ApplicationDbContext _db;
+
+        public HomeController(
+                    ApplicationDbContext db)
+        {
+            _db = db;
+
+        }
+
         public IActionResult Index()
         {
 
@@ -25,15 +33,20 @@ namespace Logowanie.Controllers
             {
                 return RedirectToAction("IndexAsync", "Rejestratorka");
             }
+            if (User.HasClaim(ClaimTypes.Role, "Lekarz"))
+            {
+                return RedirectToAction("Index", "Lekarz");
+            }
 
-            
+
+
             return View();
         }
 
+       
         public IActionResult About()
-        {
+       {
             
-
             return View();
         }
 
