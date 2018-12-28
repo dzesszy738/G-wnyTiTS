@@ -1,6 +1,16 @@
-﻿@{
-    ViewData["Title"] = "Przychodnia";
-}
+
+﻿@using System.IdentityModel;
+
+@model IEnumerable<IdentityRole>;
+@using Logowanie.Models;
+ @using Microsoft.AspNetCore.Authorization
+ @inject IAuthorizationService AuthorizationService
+
+    @{
+        ViewData["Title"] = "Przychodnia";
+    }
+
+
 
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
@@ -35,6 +45,7 @@
 
     <div class="row">
         <div class="col-md-3">
+
             <h2>Prywatna przychodnia</h2>
             <ul>
                 Zarejestruj się już dziś.
@@ -42,3 +53,27 @@
             </ul>
         </div>
     </div>
+
+
+            <div class="btn-group">
+
+
+           
+
+                @if (AuthorizationService.AuthorizeAsync(User,"Admin").IsCompletedSuccessfully)
+                {
+                    <a id="createRoleButton" asp-action="AddRole" asp-controller="ApplicationRole" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-plus"></i>  Add Role
+                    </a>
+                }
+
+                <h2>Prywatna przychodnia</h2>
+                <ul>
+
+                    Zarejestruj się już dziś.
+
+                </ul>
+
+            </div>
+                    </div>
+
