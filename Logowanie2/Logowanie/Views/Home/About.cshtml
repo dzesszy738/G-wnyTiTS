@@ -1,35 +1,15 @@
-﻿@model Pacjent
-@RenderBody()
-
-@{
+﻿@{
     ViewData["Title"] = "Dane";
-
 }
 <font face="Time New Roman">
 
     <h2><b>Dane osobowe</b></h2>
-    <form asp-controller="Home" asp-action="About" method="post">
-        <p>
-            <input type="hidden" asp-for="IdPacjent">
-        </p>
-    </form>
+
     @{
-        string imie;
-        string nazwisko;
-        var datauro = DateTime.Now;
-        if (Model.IdPacjent.ToString() == null)
-        {
-            imie = " ";
-            nazwisko = " ";
-
-
-        }
-        else
-        {
-            imie = Model.Imie;
-            nazwisko = Model.Nazwisko;
-            datauro = Model.DataUr;
-        }
+        string imie = "Ala";
+        string nazwisko = "Makota";
+        var datauro = DateTime.Now.Date;
+        string mail = "jakiśtam@mail.com";
 
     }
     <font size="4">
@@ -37,6 +17,7 @@
         Imie: &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>@imie</b>
         <br />Nazwisko: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>@nazwisko</b>
         <br />Data urodzenia:&nbsp;&nbsp;&nbsp;&nbsp; <b>@datauro</b>
+        <br />Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>@mail</b>
 
     </font>
 </font>
