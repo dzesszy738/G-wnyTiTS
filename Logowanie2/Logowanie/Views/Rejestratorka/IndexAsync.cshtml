@@ -2,7 +2,7 @@
 @using System.Collections.Generic
 @using System.Linq
 @using Microsoft.AspNetCore.Http
-@model IEnumerable<Logowanie.Models.Pacjent>
+@model IEnumerable<Pacjent>
 @{
     ViewData["Title"] = "IndexAsync";
 }
@@ -16,39 +16,43 @@
         <input type="submit" value="Szukaj" />
     </p>
 </form>
-        <table class="table">
+<table class="table">
+    <tr>
+        <th>
+            Email
+        </th>
+        <th>
+            Nazwisko
+        </th>
+        <th>
+            Imie
+        </th>
+        <th></th>
+    </tr>
+
+    @{
+
+
+        foreach (var item in Model)
+        {
+
             <tr>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Nazwisko
-                </th>
-                <th>
-                    Imie
-                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nazwisko)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Imie)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdPacjent">Edytuj</a>
+                </td>
             </tr>
-        </table>
-             @{ string searchString = ViewBag.Message;
-                 
-                    foreach (var item in Model.Where(s => s.Email.Contains(searchString)))
-            {
-                <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </th>
-                        <th>
-                            @Html.DisplayFor(modelItem => item.Nazwisko)
-                        </th>
-                        <th>
-                            @Html.DisplayFor(modelItem => item.Imie)
-                        </th>
-                        <td>
-                                    <a asp-action="Edit" asp-route-id="@item.IdPacjent">Edytuj</a> 
-                        </td>
-                    </tr>
-                </table>
-                     }
-                 }
+
+        }
+
+    }
+</table>
 

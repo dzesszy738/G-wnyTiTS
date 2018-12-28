@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Korzh.EasyQuery.Linq;
 using Logowanie.Models;
 using Microsoft.AspNetCore.Authorization;
+using Logowanie.Models.AccountViewModels;
 
 namespace Logowanie.Controllers
 {
@@ -26,21 +27,20 @@ namespace Logowanie.Controllers
 
         public async Task<IActionResult> IndexAsync(string searchString)
         {
-            var pacjenci = from p in _db.Pacjenci
-                           select p;
-            if (!String.IsNullOrEmpty(searchString))
+          
+            if (String.IsNullOrEmpty(searchString))
             {
-                ViewData["Message"] = searchString;
+                searchString = "@";
+
             }
-            else
-            {
-                ViewData["Message"] = "@";
-            }
-           var model= await _db.Pacjenci.ToListAsync();
-           
+         
+            var model = await _db.Pacjenci.ToListAsync();
+
+            IEnumerable<Pacjent> m = model.Where(x => x.Email.Contains(searchString));
 
 
-            return View(model);
+
+            return View(m);
 
         }
         [HttpGet]
@@ -64,7 +64,7 @@ namespace Logowanie.Controllers
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
 
-        public async Task<IActionResult> Edit( int? id, string returnUrl, Pacjent model)
+        public async Task<IActionResult> Edit( int? id, string returnUrl,Pacjent model)
         {
     
                 returnUrl = null;

@@ -14,7 +14,7 @@ namespace Logowanie.Models
         public int IdPacjent { get; set; }
 
         
-        [MaxLength(11)]
+      
      
         public long Pesel { get; set; }
 
@@ -30,7 +30,7 @@ namespace Logowanie.Models
 
       
        
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
 
         public DateTime DataUr { get; set; }
        
