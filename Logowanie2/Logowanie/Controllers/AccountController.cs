@@ -19,7 +19,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Diagnostics;
 using System.Text;
+
 using Logowanie.Data;
+
+using System.Net.Mail;
+using System.Security.Cryptography;
+
+
 
 namespace Logowanie.Controllers
 {
@@ -29,11 +35,12 @@ namespace Logowanie.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
+
       
-        const string DOMAIN = "sandboxf32fec52ba8b49549f919be99b52b105.mailgun.org";
-        const string API_KEY = "key-127838fb2cddb669a738dfb56e328bc3";
+      
         ApplicationDbContext _db;
        
+
 
         public AccountController(
                     UserManager<ApplicationUser> userManager,
@@ -73,8 +80,12 @@ namespace Logowanie.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            
             return View();
         }
+
+        
+       
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
@@ -92,24 +103,24 @@ namespace Logowanie.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
-        
 
-        public void Test1(string to,string text)
+
+        public void Test1(string to, string text, string sub)
         {
-            Test1Async(to,text).Wait();
+            Test1Async(to, text, sub).Wait();
         }
 
-        public async Task Test1Async(string to, string text)
+        public async Task Test1Async(string to, string text, string sub)
         {
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(UTF8Encoding.UTF8.GetBytes("api" + ":" + API_KEY)));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes("api" + ":" + API_KEY)));
 
 
             var form = new Dictionary<string, string>();
             form["from"] = "prywatna.przychodnia@tits.com";
             form["to"] = to;
-            form["subject"] = "Weryfikacja konta";
-            form["text"] = "W celu weryfikacji adresu email prosimy o kliknięcie w poniższy link:"+"\n"+text;
+            form["subject"] = sub;
+            form["text"] = text;
 
             var response = await client.PostAsync("https://api.mailgun.net/v2/" + DOMAIN + "/messages", new FormUrlEncodedContent(form));
 
@@ -153,10 +164,8 @@ namespace Logowanie.Controllers
                     }, protocol: HttpContext.Request.Scheme);
                     ViewBag.token = ctokenlink;
 
-                   // Test1(model.Email, ctokenlink);
-
-
-
+                    string sub = "Weryfikacja adresu email";
+                    Test1(user.Email, "W celu weryfikacji adresu email prosimy o kliknięcie w link: " + ctokenlink, sub);
 
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
@@ -170,12 +179,17 @@ namespace Logowanie.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
         [HttpGet]
         [AllowAnonymous]
 
         public async Task<IActionResult> Login(string returnUrl = null)
         {
-            // Clear the existing external cookie to ensure a clean login process
+           
+
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -201,7 +215,7 @@ namespace Logowanie.Controllers
                    
                     
                     _logger.LogInformation("User logged in.");
-                  
+
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.IsLockedOut)
@@ -216,13 +230,14 @@ namespace Logowanie.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+           
             return View(model);
         }
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
         {
+            
             return View();
         }
 
@@ -232,7 +247,63 @@ namespace Logowanie.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+        
+
+ [HttpPost]
+        public ActionResult ResetPassword(ForgottPassword model)
+        {
+           
+            return View("ResetPassword");
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ForgottPassword model)
+        {
+            var user = _userManager.
+                FindByNameAsync(model.Email).Result;
+
+            if (user == null || !(_userManager.
+                  IsEmailConfirmedAsync(user).Result))
+            {
+                ViewBag.Message = "Error while resetting your password!";
+                return View("ErrorReset");
+            }
+
+            var ctoken = _userManager.
+                  GeneratePasswordResetTokenAsync(user).Result;
+
+          
+
+            string nowehaslo = GetUniqueKey(10)+"*";
+
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, ctoken, nowehaslo);
+            
+           // model2.Hasło = nowehaslo;
+            Test1(user.Email, "Oto twoje nowe hasło: "+nowehaslo, "Zmiana hasła");
+
+            return View("Reset");
+
+        }
+        public static string GetUniqueKey(int maxSize)
+        {
+            char[] chars = new char[62];
+            chars =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            byte[] data = new byte[1];
+            RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
+            crypto.GetBytes(data);
+            data = new byte[maxSize];
+            crypto.GetBytes(data);
+            StringBuilder result = new StringBuilder(maxSize);
+            foreach (byte b in data)
+            {
+                result.Append(chars[b % (chars.Length)]);
+            }
+            return result.ToString();
         }
 
         public IActionResult Index()
