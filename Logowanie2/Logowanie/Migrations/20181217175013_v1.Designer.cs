@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Logowanie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181210221428_InitialCr")]
-    partial class InitialCr
+    [Migration("20181217175013_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

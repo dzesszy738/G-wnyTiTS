@@ -43,9 +43,21 @@ namespace Logowanie
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+        
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Add Role",
+                    policy => policy.RequireClaim("Can add roles", "add.role"));
+                options.AddPolicy("Edit Role",
+                    policy => policy.RequireClaim("Can edit roles", "edit.role"));
+                options.AddPolicy("Delete Role",
+                    policy => policy.RequireClaim("Can delete roles", "delete.role"));
+            });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
            .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -98,5 +110,6 @@ namespace Logowanie
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+      
     }
 }
