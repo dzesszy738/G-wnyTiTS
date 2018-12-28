@@ -30,14 +30,6 @@ namespace Logowanie
         public static void Main(string[] args)
         {
 
-            
-            CreateWebHostBuilder(args).Build().Run();
-
-        }
-
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-
             var host = BuildWebHost(args);
             using (var scope = host.Services.CreateScope())
             {
