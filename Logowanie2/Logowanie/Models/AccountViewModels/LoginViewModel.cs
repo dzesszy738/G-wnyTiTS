@@ -18,5 +18,6 @@ namespace Logowanie.Models.AccountViewModels
 
         [Display(Name = "Zapamiętaj")]
         public bool Zapamiętaj { get; set; }
+
     }
 }

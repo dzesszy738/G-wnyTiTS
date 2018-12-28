@@ -71,8 +71,12 @@ namespace Logowanie.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            
             return View();
         }
+
+        
+       
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
@@ -167,7 +171,8 @@ namespace Logowanie.Controllers
 
         public async Task<IActionResult> Login(string returnUrl = null)
         {
-            // Clear the existing external cookie to ensure a clean login process
+           
+
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -193,7 +198,7 @@ namespace Logowanie.Controllers
                    
                     
                     _logger.LogInformation("User logged in.");
-                  
+
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.IsLockedOut)
@@ -208,13 +213,14 @@ namespace Logowanie.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+           
             return View(model);
         }
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
         {
+            
             return View();
         }
 
@@ -224,6 +230,7 @@ namespace Logowanie.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
         
@@ -237,7 +244,7 @@ namespace Logowanie.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(ForgottPassword model, LoginViewModel model2)
+        public async Task<IActionResult> ChangePassword(ForgottPassword model)
         {
             var user = _userManager.
                 FindByNameAsync(model.Email).Result;
@@ -246,7 +253,7 @@ namespace Logowanie.Controllers
                   IsEmailConfirmedAsync(user).Result))
             {
                 ViewBag.Message = "Error while resetting your password!";
-                return View("Error");
+                return View("ErrorReset");
             }
 
             var ctoken = _userManager.
@@ -258,7 +265,7 @@ namespace Logowanie.Controllers
 
             IdentityResult result = await _userManager.ResetPasswordAsync(user, ctoken, nowehaslo);
             
-            //model2.Hasło = nowehaslo;
+           // model2.Hasło = nowehaslo;
             Test1(user.Email, "Oto twoje nowe hasło: "+nowehaslo, "Zmiana hasła");
 
             return View("Reset");
