@@ -19,8 +19,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Diagnostics;
 using System.Text;
+
+using Logowanie.Data;
+
 using System.Net.Mail;
 using System.Security.Cryptography;
+
 
 
 namespace Logowanie.Controllers
@@ -32,13 +36,18 @@ namespace Logowanie.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
-        
+      
+      
+        ApplicationDbContext _db;
+       
+
 
         public AccountController(
                     UserManager<ApplicationUser> userManager,
                     SignInManager<ApplicationUser> signInManager,
-                    ILogger<AccountController> logger)
+                    ILogger<AccountController> logger,ApplicationDbContext db)
         {
+            _db = db;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -129,8 +138,9 @@ namespace Logowanie.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl)
         {
+            returnUrl = null;
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
@@ -139,8 +149,13 @@ namespace Logowanie.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Pacjent");
-                 
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Pacjent"));
 
+                    Pacjent p = new Pacjent();
+                    p.Email = user.Email;
+                    _db.Add(p);
+
+                    _db.SaveChanges();
                     string ctoken = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
                     string ctokenlink = Url.Action("ConfirmEmail", "Account", new
                     {
@@ -148,8 +163,10 @@ namespace Logowanie.Controllers
                         token = ctoken
                     }, protocol: HttpContext.Request.Scheme);
                     ViewBag.token = ctokenlink;
+
                     string sub = "Weryfikacja adresu email";
                     Test1(user.Email, "W celu weryfikacji adresu email prosimy o kliknięcie w link: " + ctokenlink, sub);
+
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 

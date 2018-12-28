@@ -15,6 +15,7 @@ namespace Logowanie.Data
         : base(options)
         {
         }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -23,8 +24,7 @@ namespace Logowanie.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-        public DbSet<Lekarz> Lekarze { get; set; }
-        public DbSet<Recepcjonistka> Recepcjonistki { get; set; }
+       
         public DbSet<Pacjent> Pacjenci { get; set; }
         public DbSet<Leki> Leki { get; set; }
         public DbSet<Wizyty> Wizyty { get; set; }

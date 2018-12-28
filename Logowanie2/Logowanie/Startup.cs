@@ -49,15 +49,7 @@ namespace Logowanie
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Add Role",
-                    policy => policy.RequireClaim("Can add roles", "add.role"));
-                options.AddPolicy("Edit Role",
-                    policy => policy.RequireClaim("Can edit roles", "edit.role"));
-                options.AddPolicy("Delete Role",
-                    policy => policy.RequireClaim("Can delete roles", "delete.role"));
-            });
+       
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
            .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -100,10 +92,16 @@ namespace Logowanie
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-           app.UseCookiePolicy();
+
+            app.UseCookiePolicy();
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+            .CreateScope())
+
+           
             app.UseSession();
 
-            app.UseMvc(routes =>
+
+                app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
