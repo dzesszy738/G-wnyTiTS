@@ -6,21 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Logowanie.Models;
 using System.Security.Claims;
-using Logowanie.Data;
 
 namespace Logowanie.Controllers
 {
     public class HomeController : Controller
     {
-        ApplicationDbContext _db;
-
-        public HomeController(
-                    ApplicationDbContext db)
-        {
-            _db = db;
-
-        }
-
+        
+      
         public IActionResult Index()
         {
 
@@ -32,29 +24,16 @@ namespace Logowanie.Controllers
             {
                 return RedirectToAction("IndexAsync", "Rejestratorka");
             }
-            if (User.HasClaim(ClaimTypes.Role, "Lekarz"))
-            {
-                return RedirectToAction("Index", "Lekarz");
-            }
 
-
+            
             return View();
         }
-        [HttpGet]
-        public async Task<IActionResult> About(int? id)
+
+        public IActionResult About()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var pacjent = await _db.Pacjenci.FindAsync(id);
-            if (pacjent == null)
-            {
-                return NotFound();
-            }
+            ViewData["Message"] = "Your application description page.";
 
-
-            return View(pacjent);
+            return View();
         }
 
         public IActionResult Contact()
