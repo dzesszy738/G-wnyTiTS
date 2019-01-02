@@ -70,31 +70,6 @@ namespace Logowanie.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Logowanie.Models.Lekarz", b =>
-                {
-                    b.Property<int>("IdLekarz")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IdUser");
-
-                    b.Property<string>("Imie")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Nazwisko")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("userId");
-
-                    b.HasKey("IdLekarz");
-
-                    b.HasIndex("userId");
-
-                    b.ToTable("Lekarze");
-                });
-
             modelBuilder.Entity("Logowanie.Models.Leki", b =>
                 {
                     b.Property<int>("IdLek")
@@ -128,51 +103,20 @@ namespace Logowanie.Migrations
 
                     b.Property<DateTime>("DataUr");
 
-                    b.Property<int>("IdUser");
+                    b.Property<string>("Email");
 
                     b.Property<string>("Imie")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<string>("Nazwisko")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<long>("Pesel")
                         .HasMaxLength(11);
 
-                    b.Property<string>("userId");
-
                     b.HasKey("IdPacjent");
 
-                    b.HasIndex("userId");
-
                     b.ToTable("Pacjenci");
-                });
-
-            modelBuilder.Entity("Logowanie.Models.Recepcjonistka", b =>
-                {
-                    b.Property<int>("IdRec")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IdUser");
-
-                    b.Property<string>("Imie")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Nazwisko")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("userId");
-
-                    b.HasKey("IdRec");
-
-                    b.HasIndex("userId");
-
-                    b.ToTable("Recepcjonistki");
                 });
 
             modelBuilder.Entity("Logowanie.Models.Wizyty", b =>
@@ -302,13 +246,6 @@ namespace Logowanie.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Logowanie.Models.Lekarz", b =>
-                {
-                    b.HasOne("Logowanie.Models.ApplicationUser", "user")
-                        .WithMany("Lekarze")
-                        .HasForeignKey("userId");
-                });
-
             modelBuilder.Entity("Logowanie.Models.Leki", b =>
                 {
                     b.HasOne("Logowanie.Models.Pacjent", "Pacjent")
@@ -320,20 +257,6 @@ namespace Logowanie.Migrations
                         .WithMany("Leki")
                         .HasForeignKey("IdWizyty")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Logowanie.Models.Pacjent", b =>
-                {
-                    b.HasOne("Logowanie.Models.ApplicationUser", "user")
-                        .WithMany("Pacjenci")
-                        .HasForeignKey("userId");
-                });
-
-            modelBuilder.Entity("Logowanie.Models.Recepcjonistka", b =>
-                {
-                    b.HasOne("Logowanie.Models.ApplicationUser", "user")
-                        .WithMany("Recepcjonistki")
-                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("Logowanie.Models.Wizyty", b =>

@@ -1,0 +1,58 @@
+﻿@using Logowanie.Models
+@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@model IEnumerable<Pacjent>
+@{
+    ViewData["Title"] = "IndexAsync";
+}
+
+<h2>IndexAsync</h2>
+
+
+<form asp-controller="Rejestratorka" asp-action="IndexAsync" method="get">
+    <p>
+        email: <input type="text" name="SearchString">
+        <input type="submit" value="Szukaj" />
+    </p>
+</form>
+<table class="table">
+    <tr>
+        <th>
+            Email
+        </th>
+        <th>
+            Nazwisko
+        </th>
+        <th>
+            Imie
+        </th>
+        <th></th>
+    </tr>
+
+    @{
+
+
+        foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nazwisko)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Imie)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdPacjent">Edytuj</a>
+                </td>
+            </tr>
+
+        }
+
+    }
+</table>
+
