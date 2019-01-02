@@ -5,14 +5,19 @@
 @inject UserManager<ApplicationUser> UserManager
 @using System.Security.Claims;
 
-    @if (SignInManager.IsSignedIn(User) && !(User.HasClaim(ClaimTypes.Role, "Admin"))&& !(User.HasClaim(ClaimTypes.Role, "Recepcjonistka"))
+@if (SignInManager.IsSignedIn(User) )
+{
+    @if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
     {
+
         <ul class="nav navbar-nav navbar-left">
 
             <a asp-area="" asp-controller="Home" asp-action="About" class="navbar-brand">Dane</a>
             <a asp-area="" asp-controller="Home" asp-action="Contact" class="navbar-brand">Wizyty</a>
             <a asp-area="" asp-controller="Home" asp-action="Privacy" class="navbar-brand">Leki</a>
+
         </ul>
+    }
         <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
 
             <ul class="nav navbar-nav navbar-right">

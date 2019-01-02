@@ -1,23 +1,37 @@
-﻿@{
+﻿@using System.Security.Claims;
+@model Pacjent;
+@{
     ViewData["Title"] = "Dane";
 }
 <font face="Time New Roman">
 
     <h2><b>Dane osobowe</b></h2>
-
-    @{
-        string imie = "Ala";
-        string nazwisko = "Makota";
-        var datauro = DateTime.Now.Date;
-        string mail = "jakiśtam@mail.com";
-
-    }
     <font size="4">
 
-        Imie: &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>@imie</b>
-        <br />Nazwisko: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>@nazwisko</b>
-        <br />Data urodzenia:&nbsp;&nbsp;&nbsp;&nbsp; <b>@datauro</b>
-        <br />Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>@mail</b>
+        @{
+            string imie;
+            string nazwisko;
+            string date;
+        }
+
+        @{ if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
+                {
+                    imie = Model.Imie;
+                    nazwisko = Model.Nazwisko;
+                    date = Model.DataUr.ToShortDateString();
+                }
+
+                else
+                {
+                    imie = " ";
+                    nazwisko = "";
+                    date = "";
+                }
+            }
+            Imie: <b>@imie</b>
+        <br />Nazwisko: <b>@nazwisko</b>
+        <br />Data urodzenia: <b>@date</b>
+
+
 
     </font>
-</font>

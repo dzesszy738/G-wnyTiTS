@@ -1,0 +1,57 @@
+﻿@using Logowanie.Models
+@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@model IEnumerable<Wizyty>
+@{
+    ViewData["Title"] = "Wizyty";
+}
+
+<h2>Wizyty</h2>
+
+
+<form asp-controller="Lekarz" asp-action="Wizyty" method="get">
+    <p>
+        Data: <input type="text" name="SearchString">
+        <input type="submit" value="Szukaj" />
+    </p>
+</form>
+<table class="table">
+    <tr>
+        <th>
+            Data Wizyty
+        </th>
+        <th>
+            Opis
+        </th>
+        <th>
+            Zalecenia
+        </th>
+    </tr>
+
+    @{
+       
+        
+            foreach (var item in Model)
+            {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataWizyty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Zalecenia)
+                </td>
+
+
+            </tr>
+
+                }
+
+            }
+      
+</table>
+        
