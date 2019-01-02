@@ -59,6 +59,10 @@ namespace Logowanie.Controllers
         {
             if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
             {
+                Pacjent model1 = new Pacjent();
+                int k = _db.Pacjenci.Where(x => x.Email == User.Identity.Name).Select(y => y.IdPacjent).First();
+
+                model1 =  _db.Pacjenci.Find(k);
                 if (String.IsNullOrEmpty(searchString))
                 {
                     searchString = ".";
@@ -66,7 +70,7 @@ namespace Logowanie.Controllers
                 }
                 var model = _db.Wizyty.ToList();
 
-                IEnumerable<Wizyty> m = model.Where(x => x.DataWizyty.ToShortDateString().Contains(searchString));
+                IEnumerable<Wizyty> m = model.Where(x => x.DataWizyty.ToShortDateString().Contains(searchString) && x.IdPacjent==model1.IdPacjent);
                 return View(m);
 
             }
