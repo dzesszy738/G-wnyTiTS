@@ -36,16 +36,13 @@ namespace Logowanie.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
-<<<<<<< HEAD
-        
 
-=======
 
       
       
         ApplicationDbContext _db;
        
->>>>>>> 9240a9fc30408071a944371fc6ab158c7edd3964
+
 
 
 
