@@ -6,13 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Logowanie.Models;
 using System.Security.Claims;
+using Logowanie.Data;
 
 namespace Logowanie.Controllers
 {
     public class HomeController : Controller
     {
-        
-      
+        ApplicationDbContext _db;
+
+        public HomeController(
+                    ApplicationDbContext db)
+        {
+            _db = db;
+
+        }
+
         public IActionResult Index()
         {
 
@@ -25,23 +33,46 @@ namespace Logowanie.Controllers
             {
                 return RedirectToAction("IndexAsync", "Rejestratorka");
             }
-
-            
-            return View();
-        }
-
-        public IActionResult About()
-        {
-            
+            if (User.HasClaim(ClaimTypes.Role, "Lekarz"))
+            {
+                return RedirectToAction("Index", "Lekarz");
+            }
 
             return View();
         }
 
-        public IActionResult Contact()
+        public async Task<IActionResult> About(Pacjent model)
         {
             
+            if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
+            {
+                int k =_db.Pacjenci.Where(x => x.Email == User.Identity.Name).Select(m => m.IdPacjent).First();
+                
+                 model = await _db.Pacjenci.FindAsync(k);
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public  IActionResult Contact(string searchString)
+        {
+            if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
+            {
+                if (String.IsNullOrEmpty(searchString))
+                {
+                    searchString = ".";
+
+                }
+                var model = _db.Wizyty.ToList();
+
+                IEnumerable<Wizyty> m = model.Where(x => x.DataWizyty.ToShortDateString().Contains(searchString));
+                return View(m);
+
+            }
 
             return View();
+
         }
 
         public IActionResult Privacy()
