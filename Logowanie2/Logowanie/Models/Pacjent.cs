@@ -13,33 +13,35 @@ namespace Logowanie.Models
         [Required]
         public int IdPacjent { get; set; }
 
-        [Required]
-        [MaxLength(11)]
+        
+      
      
         public long Pesel { get; set; }
 
-        [Required]
+        
         [MaxLength(50)]
         [Display(Name = "Imię")]
         public string Imie { get; set; }
 
-        [Required]
+    
         [MaxLength(50)]
         [Display(Name = "Nazwisko")]
         public string Nazwisko { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
+      
+       
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+
         public DateTime DataUr { get; set; }
+       
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         public ICollection<Leki> Leki { get; set; }
         public ICollection<Wizyty> Wizyty { get; set; }
 
-        [Required]
-        [ForeignKey("ApplicationUser")]
 
-        public int IdUser { get; set; }
-        public ApplicationUser user { get; set; }
 
 
 
