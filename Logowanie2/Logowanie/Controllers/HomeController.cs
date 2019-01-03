@@ -29,6 +29,10 @@ namespace Logowanie.Controllers
             
             return View();
         }
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
 
         public IActionResult About()
         {
