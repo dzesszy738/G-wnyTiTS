@@ -37,9 +37,9 @@ namespace Logowanie.Controllers
         private readonly ILogger _logger;
 
 
+        
 
-      
-      
+
         ApplicationDbContext _db;
        
 
@@ -108,7 +108,7 @@ namespace Logowanie.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-
+        // Metody obsługujące wysyłanie emaili
         public void Test1(string to, string text, string sub)
         {
             Test1Async(to, text, sub).Wait();
@@ -183,10 +183,7 @@ namespace Logowanie.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        public IActionResult ForgotPassword()
-        {
-            return View();
-        }
+       
         [HttpGet]
         [AllowAnonymous]
 
@@ -256,16 +253,40 @@ namespace Logowanie.Controllers
         }
         
 
- [HttpPost]
-        public ActionResult ResetPassword(ForgottPassword model)
+
+        // Metoda obsługująca zmianę hasła - odpowiada jej ChangePasswordModel oraz widok ResetPassword znajdujący się w Home
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
         {
-           
-            return View("ResetPassword");
+
+            
+            var mail = _userManager.GetUserName(User);
+            var user = _userManager.FindByNameAsync(mail).Result;
+            if (user == null || !(_userManager.
+                      IsEmailConfirmedAsync(user).Result))
+            {
+                    ViewBag.Message = "Error while resetting your password!";
+                    return View("Error");
+            }
+
+            IdentityResult result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password);
+
+            
+            return View("Reset");
+
+        }
+
+        //Metody do zmiany hasła przez email odpowiada im model ForgottPassword oraz widoki ForgotPassword oraz Reset
+        public IActionResult ForgotPassword()
+        {
+            return View();
         }
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(ForgottPassword model)
+        public async Task<IActionResult> ChangePasswordMail(ForgottPassword model)
         {
             var user = _userManager.
                 FindByNameAsync(model.Email).Result;
@@ -286,12 +307,13 @@ namespace Logowanie.Controllers
 
             IdentityResult result = await _userManager.ResetPasswordAsync(user, ctoken, nowehaslo);
             
-           // model2.Hasło = nowehaslo;
+           
             Test1(user.Email, "Oto twoje nowe hasło: "+nowehaslo, "Zmiana hasła");
 
             return View("Reset");
 
         }
+        //Metoda do generowania losowego hasła
         public static string GetUniqueKey(int maxSize)
         {
             char[] chars = new char[62];
