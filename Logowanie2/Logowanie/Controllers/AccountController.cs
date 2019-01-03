@@ -37,7 +37,8 @@ namespace Logowanie.Controllers
         private readonly ILogger _logger;
 
 
-        
+        const string DOMAIN = "sandboxf32fec52ba8b49549f919be99b52b105.mailgun.org";
+        const string API_KEY = "key-127838fb2cddb669a738dfb56e328bc3";
 
 
         ApplicationDbContext _db;
@@ -268,7 +269,7 @@ namespace Logowanie.Controllers
                       IsEmailConfirmedAsync(user).Result))
             {
                     ViewBag.Message = "Error while resetting your password!";
-                    return View("Error");
+                    return View("ErrorReset");
             }
 
             IdentityResult result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password);
