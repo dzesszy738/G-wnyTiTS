@@ -1,0 +1,62 @@
+﻿@using Logowanie.Models
+@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@model IEnumerable<Leki>
+
+@{
+    ViewData["Title"] = "Lek";
+}
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            Nazwa
+        </th>
+        <th>
+            Staly
+        </th>
+        <th>
+            Czasowy
+        </th>
+        <th>
+            Od
+        </th>
+        <th>
+            Do
+        </th>
+    </tr>
+
+    @{
+
+
+        foreach (var item in Model)
+        {
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nazwa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Staly.ToString())
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Czasowy.ToString())
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Od)
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Do)
+
+        </td>
+    </tr>
+
+        }
+
+    }
+
+</table>

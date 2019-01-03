@@ -51,7 +51,7 @@ namespace Logowanie.Controllers
                 var a = model.Role.ToString();
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "Lekarz");
+                    await _userManager.AddToRoleAsync(user, model.Role.ToString());
                     await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, model.Role.ToString()));
 
                     string ctoken = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;

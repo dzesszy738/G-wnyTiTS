@@ -27,6 +27,9 @@
         <th>
             Zalecenia
         </th>
+        <th>
+
+        </th>
     </tr>
 
     @{
@@ -45,7 +48,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Zalecenia)
                 </td>
-
+                <td>
+                    <form asp-controller="Lekarz" asp-action="Lek" method="get">
+                        <a asp-action="Lek" asp-route-idw="@item.IdWizyty"asp-route-id="@item.IdPacjent">Leki</a>
+                    </form>
+                </td>
 
             </tr>
 
