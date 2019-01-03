@@ -18,7 +18,15 @@ namespace Logowanie.Models
         [Required]
         public bool Czasowy { get; set; }
 
-        public string NaIle { get; set; }
+        public string Nazwa { get; set; }
+
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+
+        public string Od { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+
+        public string Do { get; set; }
+
 
         [Required]
         [ForeignKey("Pacjent")]

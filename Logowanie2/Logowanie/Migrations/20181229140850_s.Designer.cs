@@ -4,14 +4,16 @@ using Logowanie.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Logowanie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181229140850_s")]
+    partial class s
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,15 +80,13 @@ namespace Logowanie.Migrations
 
                     b.Property<bool>("Czasowy");
 
-                    b.Property<string>("Do");
-
                     b.Property<int>("IdPacjent");
 
                     b.Property<int>("IdWizyty");
 
-                    b.Property<string>("Nazwa");
+                    b.Property<string>("NaIle");
 
-                    b.Property<string>("Od");
+                    b.Property<string>("Nazwa");
 
                     b.Property<bool>("Staly");
 

@@ -17,6 +17,11 @@ namespace Logowanie.Models
         [DataType(DataType.Date)]
         public DateTime DataWizyty { get; set; }
 
+
+        public string Opis { get; set; }
+        public string Zalecenia { get; set; }
+
+
         [Required]
         [ForeignKey("Pacjent")]
         public int IdPacjent { get; set; }

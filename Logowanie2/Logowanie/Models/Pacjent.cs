@@ -13,9 +13,6 @@ namespace Logowanie.Models
         [Required]
         public int IdPacjent { get; set; }
 
-        
-      
-     
         public long Pesel { get; set; }
 
         
