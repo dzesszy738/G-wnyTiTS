@@ -2,38 +2,40 @@
 @{
     ViewData["Title"] = "Rejestracja";
 }
-<div align="center">
-    <h2>@ViewData["Title"]</h2>
-    <div class="row">
-    <div class="col-sm-6 col-sm-push-3">
+<front face="Time New Roman">
+    <div align="center">
+        <h2><b>@ViewData["Title"]</h2></b>
+        <div class="row">
+            <div class="col-sm-6 col-sm-push-3">
 
-        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-            <div align="center">
-                <h4>Stwórz konto.</h4>
-            </div>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Hasło"></label>
-                <input asp-for="Hasło" class="form-control" />
-                <span asp-validation-for="Hasło" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Zarejestruj</button>
-        </form>
+                <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                    <div align="center">
+                        <h4>Stwórz konto</h4>
+                    </div>
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Hasło"></label>
+                        <input asp-for="Hasło" class="form-control" />
+                        <span asp-validation-for="Hasło" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-default">Zarejestruj</button>
+                </form>
 
-    </div>
-    </div>
+            </div>
         </div>
+    </div>
+    </front>
 
     @section Scripts {
         @await Html.PartialAsync("_ValidationScriptsPartial")
