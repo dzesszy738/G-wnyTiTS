@@ -28,6 +28,32 @@ namespace Logowanie.Controllers
             _signInManager = signInManager;
             _logger = logger;
         }
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+
+
+            var mail = _userManager.GetUserName(User);
+            var user = _userManager.FindByNameAsync(mail).Result;
+            if (user == null || !(_userManager.
+                      IsEmailConfirmedAsync(user).Result))
+            {
+                ViewBag.Message = "Error while resetting your password!";
+                return View("ErrorReset");
+            }
+
+            IdentityResult result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password);
+
+
+            return View("Reset");
+
+        }
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Index(string returnUrl = null)
