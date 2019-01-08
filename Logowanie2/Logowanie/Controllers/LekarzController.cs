@@ -106,7 +106,6 @@ namespace Logowanie.Controllers
 
         }
         [HttpGet]
-        [ValidateAntiForgeryToken]
        
       public IActionResult DodajLek(int? idp,int? idw)
         { 
@@ -131,7 +130,7 @@ namespace Logowanie.Controllers
                 _db.Leki.Add(lek);
                 _db.SaveChanges();
 
-                return RedirectToAction("WizytyDodaj", (lek.IdPacjent, lek.IdWizyty));
+                return View(lek);
 
             }
             else
@@ -140,7 +139,7 @@ namespace Logowanie.Controllers
                 lek.Staly = false;
                 _db.Leki.Add(lek);
                 _db.SaveChanges();
-                return RedirectToAction("WizytyDodaj", (lek.IdPacjent, lek.IdWizyty));
+                return View(lek);
 
             }
 

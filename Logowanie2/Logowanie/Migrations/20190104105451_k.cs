@@ -2,20 +2,21 @@
 
 namespace Logowanie.Migrations
 {
-    public partial class s : Migration
+    public partial class k : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Nazwa",
+            migrationBuilder.AddColumn<int>(
+                name: "stcz",
                 table: "Leki",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Nazwa",
+                name: "stcz",
                 table: "Leki");
         }
     }

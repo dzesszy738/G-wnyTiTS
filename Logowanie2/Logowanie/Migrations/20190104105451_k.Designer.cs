@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Logowanie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181229135235_a")]
-    partial class a
+    [Migration("20190104105451_k")]
+    partial class k
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -80,13 +80,19 @@ namespace Logowanie.Migrations
 
                     b.Property<bool>("Czasowy");
 
+                    b.Property<string>("Do");
+
                     b.Property<int>("IdPacjent");
 
                     b.Property<int>("IdWizyty");
 
-                    b.Property<string>("NaIle");
+                    b.Property<string>("Nazwa");
+
+                    b.Property<string>("Od");
 
                     b.Property<bool>("Staly");
+
+                    b.Property<int>("stcz");
 
                     b.HasKey("IdLek");
 
