@@ -37,7 +37,15 @@ namespace Logowanie.Models
         [ForeignKey("Wizyty")]
         public int IdWizyty { get; set; }
         public Wizyty Wizyta { get; set; }
-
-
+        public CzyCzas stcz { get; set; }
     }
+
+    public enum CzyCzas
+    {
+        Staly,
+        Czasowy
+    }
+
+
 }
+

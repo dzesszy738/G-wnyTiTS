@@ -1,0 +1,56 @@
+﻿@using Logowanie.Models
+@model Leki
+@{
+    ViewData["Title"] = "DodajLek";
+}
+
+
+<form asp-controller="Lekarz" asp-action="DodajLek" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="IdPacjent" />
+    <input type="hidden" asp-for="IdWizyty" />
+    <div class="form-group">
+        <label asp-for="Nazwa"></label>
+        <input asp-for="Nazwa" class="form-control" />
+        <span asp-validation-for="Nazwa" class="text-danger"></span>
+    </div>
+    <div class="col-md-10">
+        @Html.DropDownListFor(x => x.stcz, new List<SelectListItem>
+                     {
+                                         new SelectListItem() {Text = "Staly", Value="Staly"},
+                                         new SelectListItem() {Text = "Czasowy", Value="Czasowy"},
+
+                     })
+
+    </div>
+    <br />
+    <br />
+    <p align="left"> Jeśli stały ustal czas od do: </p>
+    <br />
+    <div class="form-group">
+        <label asp-for="Od"></label>
+        <input asp-for="Od" class="form-control" />
+        <span asp-validation-for="Od" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Do"></label>
+        <input asp-for="Do" class="form-control" />
+        <span asp-validation-for="Do" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Dodaj" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+<form asp-controller="Lekarz" asp-action="WizytyDodaj" method="get">
+    <a asp-action="WizytyDodaj" asp-route-idw="@Model.IdWizyty" asp-route-id="@Model.IdPacjent">Przejdz do wizyty</a>
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

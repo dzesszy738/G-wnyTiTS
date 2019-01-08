@@ -19,52 +19,57 @@
                         <input class="form-control" name="SearchString" />
                     </div>
 
-                    <div class="form-group" >
-                        <button type="submit" class="btn btn-default">Szukaj</button>
-                    </div>
 
-                </div>
+<h2>Wizyty</h2>
 
 
-            </p>
-        </form>
-        <table class="table">
-            <tr>
-                <td width="200" align="center">
-                    Data wizyty
-                </td>
-                <td width="500"align="center">
-                    Opis
-                </td>
-                <td width="500"align="center">
-                    Zalecenia
-                </td>
-                <td></td>
-            </tr>
+<form asp-controller="Home" asp-action="Contact" method="get">
+    <p>
+        Data: <input type="text" name="SearchString">
+        <input type="submit" value="Szukaj" />
+    </p>
+</form>
+<table class="table">
+    <tr>
+        <th>
+            Data Wizyty
+        </th>
+        <th>
+            Opis
+        </th>
+        <th>
+            Zalecenia
+        </th>
+        <th>
+            Leki
+        </th>
+    </tr>
 
-            @{
+    @{
 
 
-                foreach (var item in Model)
-                {
+        foreach (var item in Model)
+        {
 
-                    <tr>
-                        <td width="200" align="center">
-                            @Html.DisplayFor(modelItem => item.DataWizyty)
-                        </td>
-                        <td width="500"align="center">
-                            @Html.DisplayFor(modelItem => item.Opis)
-                        </td>
-                        <td width="500" align="center">
-                            @Html.DisplayFor(modelItem => item.Zalecenia)
-                        </td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataWizyty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Opis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Zalecenia)
+        </td>
+        <td>
+            <form asp-controller="Home" asp-action="Privacy" >
+                <a asp-action="Privacy" asp-route-idw="@item.IdWizyty" asp-route-id="@item.IdPacjent">Leki</a>
+            </form>
+        </td>
+        
+    </tr>
 
-                        <td></td>
-                    </tr>
+        }
 
-                }
-
-            }
-        </table>
-        </font>
-</front>
+    }
+</table>

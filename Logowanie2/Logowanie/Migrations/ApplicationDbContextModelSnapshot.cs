@@ -90,6 +90,8 @@ namespace Logowanie.Migrations
 
                     b.Property<bool>("Staly");
 
+                    b.Property<int>("stcz");
+
                     b.HasKey("IdLek");
 
                     b.HasIndex("IdPacjent");

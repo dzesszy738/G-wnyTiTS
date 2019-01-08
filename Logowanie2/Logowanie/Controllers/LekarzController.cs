@@ -71,12 +71,12 @@ namespace Logowanie.Controllers
 
             return View(m);
         }
-      
-        
+
+
         [HttpGet]
-        public  IActionResult Wizyty(string searchString, int? id)
+        public IActionResult Wizyty(string searchString, int? id)
         {
-            
+
             if (String.IsNullOrEmpty(searchString))
             {
                 var mo = _db.Wizyty.Where(x => x.IdPacjent == id);
@@ -86,20 +86,32 @@ namespace Logowanie.Controllers
             var model = _db.Wizyty.Where(x => x.IdPacjent == id);
 
             IEnumerable<Wizyty> m = model.Where(x => x.DataWizyty.ToShortDateString().Contains(searchString));
-           
-             
+
+
             return View(m);
 
 
 
         }
         [HttpGet]
-        public IActionResult WizytyDodaj(int id)
+        public IActionResult WizytyDodaj(int id, int? idw)
         {
-            Wizyty w = new Wizyty() { IdPacjent = id, DataWizyty = DateTime.Now };
-            
-            return View(w);
+            if (idw.HasValue)
+            {
+                Wizyty wi = _db.Wizyty.Where(x => x.IdPacjent == id && x.IdWizyty==idw.Value).Last();
 
+                return View(wi);
+            }
+            else
+            {
+                Wizyty w = new Wizyty() { IdPacjent = id, DataWizyty = DateTime.Now };
+                _db.Wizyty.Add(w);
+                _db.SaveChanges();
+
+                Wizyty wi = _db.Wizyty.Where(x => x.IdPacjent == w.IdPacjent && x.DataWizyty == w.DataWizyty).Last();
+
+                return View(wi);
+            }
 
 
 
@@ -109,17 +121,74 @@ namespace Logowanie.Controllers
 
         public IActionResult WizytyDodaj(Wizyty wizyta)
         {
-            _db.Wizyty.Add(wizyta);
-            _db.SaveChanges();
+            if (wizyta.Opis == null && wizyta.Zalecenia == null)
+            {
+                _db.Wizyty.Remove(wizyta);
+                _db.SaveChanges();
+            }
+            else
+            {
+                _db.Wizyty.Update(wizyta);
+                _db.SaveChanges();
+            }
 
-            return View();
+            return RedirectToAction("Index", "");
 
-        
+
 
         }
-        public IActionResult LekDodaj()
+        [HttpGet]
+       
+      public IActionResult DodajLek(int? idp,int? idw)
+        { 
+           
+            Leki w = new Leki() { IdPacjent = idp.Value, IdWizyty = idw.Value };
+
+            return View(w);
+
+
+
+        }
+
+        [HttpPost]
+        public IActionResult DodajLek(Leki lek)
         {
-            return View();
+
+            if (lek.stcz.ToString() == "Staly")
+            {
+                lek.Staly = true;
+                lek.Czasowy = false;
+
+                _db.Leki.Add(lek);
+                _db.SaveChanges();
+
+                return View(lek);
+
+            }
+            else
+            {
+                lek.Czasowy = true;
+                lek.Staly = false;
+                _db.Leki.Add(lek);
+                _db.SaveChanges();
+                return View(lek);
+
+            }
+
+        }
+
+
+        [HttpGet]
+        public IActionResult Lek( int? id,int? idw)
+        {
+
+                var mo = _db.Leki.Where(x => x.IdPacjent == id && x.IdWizyty==idw);
+
+                return View(mo);
+          
+
+
+
         }
     }
 }
