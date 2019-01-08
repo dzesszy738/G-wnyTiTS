@@ -12,12 +12,15 @@ namespace Logowanie.Models.AccountViewModels
         [EmailAddress]
         public string Email { get; set; }
         [Required]
+        [Display(Name = "Obecne hasło")]
         [DataType(DataType.Password)]
         public string CurrentPassword { get; set; }
         [Required]
+        [Display(Name = "Nowe hasło")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Required]
+        [Display(Name = "Powtórz nowe hasło")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
         
