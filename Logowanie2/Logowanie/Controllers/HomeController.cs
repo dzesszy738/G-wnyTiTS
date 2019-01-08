@@ -79,19 +79,27 @@ namespace Logowanie.Controllers
 
         }
 
-        public IActionResult Privacy(int? id, int? idw)
+        public IActionResult Privacy(int? idw)
         {
             if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
             {
                 Pacjent model1 = new Pacjent();
                 int k = _db.Pacjenci.Where(x => x.Email == User.Identity.Name).Select(y => y.IdPacjent).First();
 
+                if (idw.HasValue)
+                {
+                    var mo = _db.Leki.Where(x => x.IdPacjent == k && x.IdWizyty == idw);
 
-                var mo = _db.Leki.Where(x => x.IdPacjent == id && x.IdWizyty == idw);
+                    return View(mo);
+                }
+                else
+                {
+                    var mo = _db.Leki.Where(x => x.IdPacjent == k);
 
-                return View(mo);
+                    return View(mo);
+                }
             }
-            return View()
+            return View();
            }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
