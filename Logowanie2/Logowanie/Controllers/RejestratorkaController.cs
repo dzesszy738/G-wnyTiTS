@@ -10,18 +10,48 @@ using Korzh.EasyQuery.Linq;
 using Logowanie.Models;
 using Microsoft.AspNetCore.Authorization;
 using Logowanie.Models.AccountViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Logowanie.Controllers
 {
     public class RejestratorkaController : Controller
     {
         ApplicationDbContext _db;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public RejestratorkaController(
+            UserManager<ApplicationUser> userManager,
                     ApplicationDbContext db)
         {
             _db = db;
+            _userManager = userManager;
             
+        }
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+
+
+            var mail = _userManager.GetUserName(User);
+            var user = _userManager.FindByNameAsync(mail).Result;
+            if (user == null || !(_userManager.
+                      IsEmailConfirmedAsync(user).Result))
+            {
+                ViewBag.Message = "Error while resetting your password!";
+                return View("ErrorReset");
+            }
+
+            IdentityResult result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password);
+
+
+            return View("Reset");
+
         }
         [HttpGet]
 

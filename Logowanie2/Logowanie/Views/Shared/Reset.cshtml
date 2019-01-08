@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Logowanie.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using System.Security.Claims;
+@{
+    ViewData["Title"] = "Reset";
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    <h2>Hasło zostało zmienione.</h2>
+
+}
+else
+{
+    <h2>Nowe hasło zostało wysłane na podany email.</h2>
+}

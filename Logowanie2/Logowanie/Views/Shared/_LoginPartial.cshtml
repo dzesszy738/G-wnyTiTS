@@ -5,6 +5,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @using System.Security.Claims;
 
+
 @if (SignInManager.IsSignedIn(User) )
 {
     @if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
@@ -12,9 +13,9 @@
 
         <ul class="nav navbar-nav navbar-left">
 
-            <a asp-area="" asp-controller="Home" asp-action="About" class="navbar-brand">Dane</a>
-            <a asp-area="" asp-controller="Home" asp-action="Contact" class="navbar-brand">Wizyty</a>
-            <a asp-area="" asp-controller="Home" asp-action="Privacy" class="navbar-brand">Leki</a>
+            <a asp-area="" asp-controller="Home" asp-action="About" class="navbar-brand" style="color: #ffffff">Dane</a>
+            <a asp-area="" asp-controller="Home" asp-action="Contact" class="navbar-brand" style="color: #ffffff">Wizyty</a>
+            <a asp-area="" asp-controller="Home" asp-action="Privacy" class="navbar-brand" style="color: #ffffff">Leki</a>
 
         </ul>
     }
@@ -23,21 +24,30 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
 
-                    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Witaj @UserManager.GetUserName(User)!</a>
-                </li>
 
-                <li>
-                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Wyloguj się</button>
-                </li>
-            </ul>
-        </form>
-
-
-    }
-    else
-    {
         <ul class="nav navbar-nav navbar-right">
-            <li><a asp-area="" asp-controller="Account" asp-action="Register">Zarejestruj się</a></li>
-            <li><a asp-area="" asp-controller="Account" asp-action="Login">Zaloguj się</a></li>
+            <li>
+
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Witaj @UserManager.GetUserName(User)!</a>
+            </li>
+            <li>
+
+                <a asp-area="" asp-action="ResetPassword" title="Manage">Zmień hasło</a>
+            </li>
+
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link" style="color: #ffffff">Wyloguj się</button>
+            </li>
         </ul>
-    }
+    </form>
+    
+
+
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-area="" asp-controller="Account" asp-action="Register">Zarejestruj się</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login">Zaloguj się</a></li>
+    </ul>
+}
