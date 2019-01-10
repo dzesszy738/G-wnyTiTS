@@ -1,0 +1,26 @@
+﻿@model Wizyty
+@{
+    ViewData["Title"] = "CzyLek";
+}
+<center>
+    <h2>Czy chcesz dodać lek ?</h2>
+    <br>
+
+    <table>
+        <tr>
+            <input type="hidden" asp-for="IdPacjent" />
+            <input type="hidden" asp-for="IdWizyty" />
+            <td>
+                <form asp-controller="Lekarz" asp-action="DodajLek" method="get">
+                    <a asp-action="DodajLek" asp-route-idw="@Model.IdWizyty" asp-route-idp="@Model.IdPacjent"> <font size="4"><u>Tak </u>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                </form>
+            </td>
+            
+            <td>
+                <form asp-controller="Lekarz" asp-action="Index" method="get">
+                    <a asp-action="Index" asp-route-searchString=" "> <font size="4">&nbsp;&nbsp;&nbsp;&nbsp;<u> Nie</u></a>
+                </form>
+            </td>
+        </tr>
+    </table>
+</center>

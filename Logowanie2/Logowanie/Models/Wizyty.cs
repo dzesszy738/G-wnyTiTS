@@ -21,6 +21,7 @@ namespace Logowanie.Models
         public string Opis { get; set; }
         public string Zalecenia { get; set; }
 
+        public int JestLek { get; set; }
 
         [Required]
         [ForeignKey("Pacjent")]

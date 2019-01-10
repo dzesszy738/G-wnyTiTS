@@ -94,12 +94,12 @@ namespace Logowanie.Controllers
 
         }
         [HttpGet]
-        public IActionResult WizytyDodaj(int id, int? idw)
+        public IActionResult WizytyDodaj(int id, int? idw,int? idl)
         {
             if (idw.HasValue)
             {
                 Wizyty wi = _db.Wizyty.Where(x => x.IdPacjent == id && x.IdWizyty==idw.Value).Last();
-
+                wi.JestLek = idl.Value;
                 return View(wi);
             }
             else
@@ -116,6 +116,14 @@ namespace Logowanie.Controllers
 
 
         }
+        [HttpGet]
+        public IActionResult CzyLek(Wizyty wizyta)
+        {
+
+            return View(wizyta);
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -125,14 +133,21 @@ namespace Logowanie.Controllers
             {
                 _db.Wizyty.Remove(wizyta);
                 _db.SaveChanges();
+                return RedirectToAction("Index", "");
+            }
+            else if(wizyta.JestLek==0)
+            {
+                _db.Wizyty.Update(wizyta);
+                _db.SaveChanges();
+                return RedirectToAction("Czylek", wizyta);
             }
             else
             {
                 _db.Wizyty.Update(wizyta);
                 _db.SaveChanges();
+                return RedirectToAction("Index", "");
             }
-
-            return RedirectToAction("Index", "");
+           
 
 
 
