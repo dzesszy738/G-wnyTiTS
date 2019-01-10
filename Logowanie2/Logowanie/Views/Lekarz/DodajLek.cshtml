@@ -46,7 +46,7 @@
     </div>
 </form>
 <form asp-controller="Lekarz" asp-action="WizytyDodaj" method="get">
-    <a asp-action="WizytyDodaj" asp-route-idw="@Model.IdWizyty" asp-route-id="@Model.IdPacjent">Przejdz do wizyty</a>
+    <a asp-action="WizytyDodaj" asp-route-idw="@Model.IdWizyty" asp-route-id="@Model.IdPacjent" asp-route-idl="@Model.IdLek">Przejdz do wizyty</a>
 </form>
 
 
