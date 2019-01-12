@@ -8,13 +8,13 @@ namespace Logowanie.Models.AccountViewModels
 {
     public class ForgottPassword
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage ="Pole wymagane")]
+        [EmailAddress(ErrorMessage ="Niepoprawny adres email")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Pole wymagane")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Pole wymagane")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
         [Required]

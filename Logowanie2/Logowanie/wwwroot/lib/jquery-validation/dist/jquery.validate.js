@@ -360,7 +360,8 @@ $.extend( $.validator, {
 	},
 
 	messages: {
-		required: "This field is required.",
+        required: "This field is required.",
+        pesel: "Niepoprawny pesel",
 		remote: "Please fix this field.",
 		email: "Please enter a valid email address.",
 		url: "Please enter a valid URL.",
@@ -1148,7 +1149,8 @@ $.extend( $.validator, {
 	},
 
 	classRuleSettings: {
-		required: { required: true },
+        required: { required: true },
+        pesel: { pesel: true },
 		email: { email: true },
 		url: { url: true },
 		date: { date: true },
@@ -1382,7 +1384,20 @@ $.extend( $.validator, {
 			// If you have a problem with this implementation, report a bug against the above spec
 			// Or use custom methods to implement your own email validation
 			return this.optional( element ) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test( value );
-		},
+        },
+
+        pesel: function (value,element) {
+            var pesel = value.replace(/[\ \-]/gi, '');
+            if (pesel.length != 11) { return false; } else {
+                var steps = new Array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3);
+                var sum_nb = 0;
+                for (var x = 0; x < 10; x++) { sum_nb += steps[x] * pesel[x]; }
+                sum_m = 10 - sum_nb % 10;
+                if (sum_m == 10) { sum_c = 0; } else { sum_c = sum_m; }
+                if (sum_c != pesel[10]) { return false; }
+            }
+            return true;
+        }, 
 
 		// https://jqueryvalidation.org/url-method/
 		url: function( value, element ) {
