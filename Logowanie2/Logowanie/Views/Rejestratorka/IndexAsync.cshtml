@@ -4,56 +4,73 @@
 @using Microsoft.AspNetCore.Http
 @model IEnumerable<Pacjent>
 @{
-    ViewData["Title"] = "IndexAsync";
+    ViewData["Title"] = "Wyszukaj";
 }
 
-<h2>IndexAsync</h2>
+<font face="Time New Roman">
+    <div align="center">
+        <h2><b>Wyszukaj pacjenta</b></h2>
+        </div>
+    <hr />
+
+        <font size="4">
+            <br />
 
 
-<form asp-controller="Rejestratorka" asp-action="IndexAsync" method="get">
-    <p>
-        email: <input type="text" name="SearchString">
-        <input type="submit" value="Szukaj" />
+            <form asp-controller="Rejestratorka" asp-action="IndexAsync" method="get">
+                <p>
+                    <b> Podaj adres email:</b>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input class="form-control" name="SearchString" />
+                        </div>
 
-    </p>
-</form>
-<table class="table">
-    <tr>
-        <th>
-            Email
-        </th>
-        <th>
-            Nazwisko
-        </th>
-        <th>
-            Imie
-        </th>
-        <th></th>
-    </tr>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default">Szukaj</button>
+                        </div>
 
-    @{
+                    </div>
 
 
-        foreach (var item in Model)
-        {
+                </p>
+            </form>
+            <table class="table">
+                <tr>
+                    <td width="400">
+                        <b> Email </b>
+                    </td>
+                    <td width="300">
+                        <b> Nazwisko </b>
+                    </td>
+                    <td width="300">
+                        <b> Imię </b>
+                    </td>
+                    <th></th>
+                </tr>
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nazwisko)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Imie)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdPacjent">Edytuj</a>
-                </td>
-            </tr>
+                @{
 
-        }
 
-    }
-</table>
+                    foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nazwisko)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Imie)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.IdPacjent">Edytuj</a>
+                            </td>
+                        </tr>
+
+                    }
+
+                }
+            </table>
 

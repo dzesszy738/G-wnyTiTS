@@ -360,7 +360,7 @@ $.extend( $.validator, {
 	},
 
 	messages: {
-        required: "This field is required.",
+        required: "Pole jest wymagane",
         pesel: "Niepoprawny pesel",
 		remote: "Please fix this field.",
 		email: "Please enter a valid email address.",

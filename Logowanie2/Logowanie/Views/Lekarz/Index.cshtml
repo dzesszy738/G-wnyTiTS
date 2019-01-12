@@ -1,12 +1,28 @@
 ﻿@model IEnumerable<Pacjent>
     @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pacjenci";
     }
-    <h2>Index</h2>
+<font face="Times New Roman">
+    <div align="center">
+    <h2><b>Pacjenci</b></h2>
+        </div>
+    <hr />
+    <font size="4">
     <form asp-controller="Lekarz" asp-action="Index" method="get">
         <p>
-            Pesel: <input type="text" name="SearchString">
-            <input type="submit" value="Szukaj" />
+            <b> Podaj PESEL:</b>
+            <div class="row">
+                <div class="col-md-3">
+                    <input class="form-control" name="SearchString" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Szukaj</button>
+                </div>
+
+            </div>
+
+
         </p>
     </form>
     <table class="table">
@@ -18,9 +34,9 @@
                 Nazwisko
             </th>
             <th>
-                Imie
+                Imię
             </th>
-            <th></th>
+            <th>Wizyty</th>
         </tr>
         @{
 

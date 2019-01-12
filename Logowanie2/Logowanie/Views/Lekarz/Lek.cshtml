@@ -5,58 +5,65 @@
 @model IEnumerable<Leki>
 
 @{
-    ViewData["Title"] = "Lek";
+    ViewData["Title"] = "Leki";
 }
 
+<font face="Time New Roman">
+    <div align="center">
+        <h2><b>Leki</b></h2>
+    </div>
+    <hr />
+    <br />
+    <br />
+    <font size="4">
+
+        <table class="table">
+            <tr>
+                <th>
+                    Nazwa leku
+                </th>
+                <th>
+                    Stały
+                </th>
+                <th>
+                    Czasowy
+                </th>
+                <th>
+                    Od
+                </th>
+                <th>
+                    Do
+                </th>
+            </tr>
+
+            @{
 
 
-<table class="table">
-    <tr>
-        <th>
-            Nazwa
-        </th>
-        <th>
-            Staly
-        </th>
-        <th>
-            Czasowy
-        </th>
-        <th>
-            Od
-        </th>
-        <th>
-            Do
-        </th>
-    </tr>
+                foreach (var item in Model)
+                {
 
-    @{
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nazwa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Staly)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Czasowy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Od)
 
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Do)
 
-        foreach (var item in Model)
-        {
+                        </td>
+                    </tr>
 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nazwa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Staly)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Czasowy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Od)
+                }
 
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Do)
+            }
 
-        </td>
-    </tr>
-
-        }
-
-    }
-
-</table>
+        </table>

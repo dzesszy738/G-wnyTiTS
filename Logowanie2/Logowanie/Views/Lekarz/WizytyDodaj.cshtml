@@ -1,47 +1,57 @@
 ﻿@using Logowanie.Models
 @model Wizyty
 @{
-    ViewData["Title"] = "WizytyDodaj";
+    ViewData["Title"] = "Dodaj wizytę";
 }
 
-
-
-@DateTime.Now
-
-
-
-
-
-<form asp-controller="Lekarz" asp-action="WizytyDodaj" method="post">
-
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <input type="hidden" asp-for="IdPacjent" />
-    <input type="hidden" asp-for="IdWizyty" />
-    <input type="hidden" asp-for="JestLek" />
-
-    <input type="hidden" asp-for="DataWizyty" />
-    <div class="form-group">
-        <label asp-for="Opis"></label>
-        <input asp-for="Opis" class="form-control" />
-        <span asp-validation-for="Opis" class="text-danger"></span>
+<font face="Time New Roman">
+    <div align="center">
+        <h2><b>Dodaj wizytę</b></h2>
     </div>
-    <div class="form-group">
-        <label asp-for="Zalecenia"></label>
-        <input asp-for="Zalecenia" class="form-control" />
-        <span asp-validation-for="Zalecenia" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Dodaj" class="btn btn-default" />
-        </div>
-    </div>
+    <hr />
+    <br />
+    <br />
+    <font size="4">
 
-</form>
+
+        Data wizyty: <b>@DateTime.Now.ToShortDateString() </b>
+
+        <br />
 
 
 
+        <form asp-controller="Lekarz" asp-action="WizytyDodaj" method="post">
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="IdPacjent" />
+            <input type="hidden" asp-for="IdWizyty" />
+            <input type="hidden" asp-for="JestLek" />
+
+            <input type="hidden" asp-for="DataWizyty" />
+            <div class="form-group">
+                <label asp-for="Opis"></label>
+                <input asp-for="Opis" class="form-control" />
+                <span asp-validation-for="Opis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zalecenia"></label>
+                <input asp-for="Zalecenia" class="form-control" />
+                <span asp-validation-for="Zalecenia" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" align="center">
+                
+                    <input type="submit" value="Dodaj" class="btn btn-default" />
+                
+            </div>
+
+        </form>
+        Aby dodać lek należy wypełnić pole "Opis" i/lub "Zalecenia", a następnie zatwierdzić za pomocą przycisku "Dodaj".
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }

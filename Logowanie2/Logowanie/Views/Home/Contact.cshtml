@@ -6,37 +6,45 @@
 @{
     ViewData["Title"] = "Wizyty";
 }
-<front face="Time New Roman">
+<font face="Time New Roman">
     <div align="center">
     <h2><b>Wizyty</b></h2>
         </div>
+    <hr />
     <font size="4">
     
 
+        <form asp-controller="Home" asp-action="Contact" method="get">
+            <p>
+               <b> Wpisz datę:</b>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input class="form-control" name="SearchString" />
+                    </div>
 
-<h2>Wizyty</h2>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Szukaj</button>
+                    </div>
+
+                </div>
 
 
-<form asp-controller="Home" asp-action="Contact" method="get">
-    <p>
-        Data: <input type="text" name="SearchString">
-        <input type="submit" value="Szukaj" />
-    </p>
-</form>
+            </p>
+        </form>
 <table class="table">
     <tr>
-        <th>
-            Data Wizyty
-        </th>
-        <th>
-            Opis
-        </th>
-        <th>
-            Zalecenia
-        </th>
-        <th>
-            Leki
-        </th>
+        <td width="200" >
+           <b> Data wizyty </b>
+        </td>
+        <td width="500" >
+          <b>  Opis </b>
+        </td>
+        <td width="500" >
+          <b>  Zalecenia </b>
+        </td>
+        <td width="100" >
+          <b>  Leki </b>
+        </td>
     </tr>
 
     @{
@@ -67,3 +75,5 @@
 
     }
 </table>
+        </font>
+    </font>

@@ -18,18 +18,20 @@ namespace Logowanie.Models
 
         
         [MaxLength(50)]
+        
         [Display(Name = "Imię")]
         public string Imie { get; set; }
 
     
         [MaxLength(50)]
+        
         [Display(Name = "Nazwisko")]
         public string Nazwisko { get; set; }
 
-      
-       
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
 
+
+        [DataType(DataType.Date),DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Data urodzenia")]
         public DateTime DataUr { get; set; }
        
         [EmailAddress]

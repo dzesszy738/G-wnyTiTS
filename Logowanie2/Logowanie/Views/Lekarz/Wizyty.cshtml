@@ -6,59 +6,72 @@
 @{
     ViewData["Title"] = "Wizyty";
 }
+<font face="Time New Roman">
+    <div align="center">
+        <h2><b>Wizyty</b></h2>
+        <hr />
+    </div>
+    <font size="4">
 
-<h2>Wizyty</h2>
+        <form asp-controller="Lekarz" asp-action="Wizyty" method="get">
+            <p>
+                <b> Wpisz datę:</b>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input class="form-control" name="SearchString" />
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Szukaj</button>
+                    </div>
+
+                </div>
 
 
-<form asp-controller="Lekarz" asp-action="Wizyty" method="get">
-    <p>
-        Data: <input type="text" name="SearchString">
-        <input type="submit" value="Szukaj" />
-    </p>
-</form>
-<table class="table">
-    <tr>
-        <th>
-            Data Wizyty
-        </th>
-        <th>
-            Opis
-        </th>
-        <th>
-            Zalecenia
-        </th>
-        <th>
-            Leki
-        </th>
-    </tr>
-
-    @{
-       
-        
-            foreach (var item in Model)
-            {
-
+            </p>
+        </form>
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataWizyty)
+                <td width="200">
+                    <b> Data wizyty </b>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Opis)
+                <td width="500">
+                    <b>  Opis </b>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Zalecenia)
+                <td width="500">
+                    <b>  Zalecenia </b>
                 </td>
-                <td>
-                    <form asp-controller="Lekarz" asp-action="Lek" method="get">
-                        <a asp-action="Lek" asp-route-idw="@item.IdWizyty"asp-route-id="@item.IdPacjent">Leki</a>
-                    </form>
+                <td width="100">
+                    <b>  Leki </b>
                 </td>
-
             </tr>
+
+            @{
+
+
+                foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataWizyty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Opis)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Zalecenia)
+                        </td>
+                        <td>
+                            <form asp-controller="Lekarz" asp-action="Lek" method="get">
+                                <a asp-action="Lek" asp-route-idw="@item.IdWizyty" asp-route-id="@item.IdPacjent">Leki</a>
+                            </form>
+                        </td>
+
+                    </tr>
 
                 }
 
             }
-      
-</table>
-        
+
+        </table>

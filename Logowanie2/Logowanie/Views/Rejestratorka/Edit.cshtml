@@ -1,56 +1,63 @@
 ﻿@model Pacjent
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edytuj";
 }
-<h2>Edit</h2>
-
-<form asp-action="Edit">
-    <div class="form-horizontal">
-        <h4>Movie</h4>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="IdPacjent" />
-        <input type="hidden" asp-for="Email" />
-        <div class="form-group">
-            <label asp-for="Imie" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Imie" class="form-control" />
-                <span asp-validation-for="Imie" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Nazwisko" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Nazwisko" class="form-control" />
-                <span asp-validation-for="Nazwisko" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Pesel" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Pesel" class="form-control" />
-                <span asp-validation-for="Pesel" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="DataUr" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="DataUr" class="form-control" />
-                <span asp-validation-for="DataUr" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Zapisz" class="btn btn-default" />
-            </div>
-        </div>
+<font face="Time New Roman">
+    <div align="center">
+        <h2><b>Edytuj dane pacjenta</b></h2>
     </div>
-</form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <font size="4">
+        <br />
+
+        <form asp-action="Edit">
+            <div class="form-horizontal">
+                
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IdPacjent" />
+                <input type="hidden" asp-for="Email" />
+                <div class="form-group">
+                    <label asp-for="Imie" class="col-md-2 control-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="Imie" class="form-control" />
+                        <span asp-validation-for="Imie" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Nazwisko" class="col-md-2 control-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="Nazwisko" class="form-control" />
+                        <span asp-validation-for="Nazwisko" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pesel" class="col-md-2 control-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="Pesel" class="form-control" />
+                        <span asp-validation-for="Pesel" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DataUr" class="col-md-2 control-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="DataUr" class="form-control" />
+                        <span asp-validation-for="DataUr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                   <div align="center">
+                       <b> <input type="submit" value="Zapisz" class="btn btn-default" /></b>
+                   </div>
+                </div>
+            </div>
+        </form>
+
+        <div>
+            <a asp-action="IndexAsync">Powrót</a>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
