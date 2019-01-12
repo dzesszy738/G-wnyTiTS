@@ -63,7 +63,16 @@ namespace Logowanie
                     
 
                 });
-            
+            services.Configure<IdentityOptions>(options =>
+            {
+                
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+            });
             services.AddSession(options =>
             {
                 options.Cookie.HttpOnly = true;

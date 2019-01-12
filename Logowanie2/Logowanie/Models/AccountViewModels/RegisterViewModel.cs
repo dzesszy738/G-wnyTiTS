@@ -8,13 +8,13 @@ namespace Logowanie.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Adres email jest wymagany")]
+        [EmailAddress(ErrorMessage ="Niepoprawny adres email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage ="Hasło jest wymagane")]
+        [StringLength(100, ErrorMessage = "{0} musi się składać z co najmniej {2} znaków", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
         public string Hasło { get; set; }

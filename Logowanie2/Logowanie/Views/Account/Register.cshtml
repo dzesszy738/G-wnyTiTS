@@ -29,14 +29,19 @@
                         <input asp-for="ConfirmPassword" class="form-control" />
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
-                    <button type="submit" class="btn btn-default">Zarejestruj</button>
+                    <button type="submit" class="btn btn-default" onclick="myFunction()">Zarejestruj</button>
                 </form>
 
             </div>
         </div>
     </div>
-    </front>
+</front>
+<script>
+function myFunction() {
+    alert("Zweryfikuj swój adres email poprzez link wysłany na podany adres");
+}
+</script>
 
-    @section Scripts {
-        @await Html.PartialAsync("_ValidationScriptsPartial")
-    }
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

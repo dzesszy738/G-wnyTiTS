@@ -37,7 +37,7 @@ namespace Logowanie.Controllers
         private readonly ILogger _logger;
 
 
-       
+        
 
         ApplicationDbContext _db;
        
@@ -179,7 +179,7 @@ namespace Logowanie.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
+            
             return View(model);
         }
        
@@ -207,8 +207,7 @@ namespace Logowanie.Controllers
             if (ModelState.IsValid)
             {
               
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Hasło, model.Zapamiętaj, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {

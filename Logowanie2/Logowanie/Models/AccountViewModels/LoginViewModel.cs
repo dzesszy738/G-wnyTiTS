@@ -8,11 +8,11 @@ namespace Logowanie.Models.AccountViewModels
 {
     public class LoginViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Adres email jest wymagany")]
+        [EmailAddress(ErrorMessage = "Niepoprawny adres email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Hasło jest wymagane")]
         [DataType(DataType.Password)]
         public string Hasło { get; set; }
 
