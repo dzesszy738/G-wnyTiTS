@@ -82,7 +82,7 @@ namespace Logowanie.Controllers
 
                     string ctoken = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    var result2 = await _userManager.ConfirmEmailAsync(user, ctoken);
 
                     _logger.LogInformation("User created a new account with password.");
                     return View();
