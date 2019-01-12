@@ -30,7 +30,7 @@ namespace Logowanie.Models
 
 
 
-        [DataType(DataType.Date),DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Data urodzenia")]
         public DateTime DataUr { get; set; }
        
