@@ -20,11 +20,10 @@ namespace Logowanie.Models
 
         public string Nazwa { get; set; }
 
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-
+        [DataType(DataType.Date)]
         public string Od { get; set; }
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
 
+        [DataType(DataType.Date)]
         public string Do { get; set; }
 
 

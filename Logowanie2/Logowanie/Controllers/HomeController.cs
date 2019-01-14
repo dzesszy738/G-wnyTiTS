@@ -63,20 +63,21 @@ namespace Logowanie.Controllers
         {
             if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
             {
-                Pacjent model1 = new Pacjent();
+                
                 int k = _db.Pacjenci.Where(x => x.Email == User.Identity.Name).Select(y => y.IdPacjent).First();
-
-                model1 =  _db.Pacjenci.Find(k);
+                var model = _db.Wizyty.Where(x=>x.IdPacjent==k).ToList();
                 if (String.IsNullOrEmpty(searchString))
                 {
-                    searchString = ".";
+                    return View(model);
 
                 }
-                var model = _db.Wizyty.ToList();
+                else
+                {
 
-                IEnumerable<Wizyty> m = model.Where(x => x.DataWizyty.ToShortDateString().Contains(searchString) && x.IdPacjent==model1.IdPacjent);
-                return View(m);
 
+                    IEnumerable<Wizyty> m = model.Where(x => x.DataWizyty.ToShortDateString().Contains(searchString) && x.IdPacjent == k);
+                    return View(m);
+                }
             }
 
             return View();

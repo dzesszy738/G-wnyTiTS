@@ -50,7 +50,7 @@
 
                         <div class="form-group">
                             
-                                <input type="submit" value="Dodaj" class="btn btn-default" />
+                                <input type="submit" value="Dodaj" class="btn btn-default" onclick="myFunction()" />
                             
                         </div>
                     </form>
@@ -61,6 +61,12 @@
 <br />
 <div align="center"> Po zatwierdzeniu przez naciśnięcie przycisku "Dodaj" możliwe jest dodanie kolejnego leku. W przypadku chęci zakończenia modyfikacji listy leków, należy wcisnąć przycisk "Przejdź do wizyty" i ponownie kliknąć przycisk "Dodaj" w celu ostatecznego dodania wizyty.
     </div>
+
+<script>
+function myFunction() {
+    alert("Lek został dodany");
+}
+</script>
 
                     @section Scripts {
                         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
