@@ -88,6 +88,8 @@ namespace Logowanie.Controllers
         {
             if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
             {
+               
+
                 Pacjent model1 = new Pacjent();
                 int k = _db.Pacjenci.Where(x => x.Email == User.Identity.Name).Select(y => y.IdPacjent).First();
 

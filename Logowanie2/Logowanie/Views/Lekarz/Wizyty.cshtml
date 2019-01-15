@@ -49,9 +49,10 @@
             @{
 
 
-                foreach (var item in Model)
+                foreach (var item in Model.Reverse())
                 {
-
+                    if (!(item.Opis == null) || item.Zalecenia != null)
+                    {
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.DataWizyty)
@@ -69,9 +70,9 @@
                         </td>
 
                     </tr>
+                        }
+                    }
 
                 }
-
-            }
 
         </table>
