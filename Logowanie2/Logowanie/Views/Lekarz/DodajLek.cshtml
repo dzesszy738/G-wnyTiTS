@@ -9,7 +9,7 @@
         <h2><b>Dodaj lek</b></h2>
 
         <font size="4">
-        <hr />
+            <hr />
             <br />
 
             <div class="row">
@@ -23,15 +23,15 @@
                             <input asp-for="Nazwa" class="form-control" />
                             <span asp-validation-for="Nazwa" class="text-danger"></span>
                         </div>
-                        
-                            @Html.DropDownListFor(x => x.stcz, new List<SelectListItem>
-                                         {
-                                                             new SelectListItem() {Text = "Stały", Value="Staly"},
-                                                             new SelectListItem() {Text = "Czasowy", Value="Czasowy"},
 
-                                         })
+                        @Html.DropDownListFor(x => x.stcz, new List<SelectListItem>
+                                     {
+                                                         new SelectListItem() {Text = "Stały", Value="Staly"},
+                                                         new SelectListItem() {Text = "Czasowy", Value="Czasowy"},
 
-                        
+                                     })
+
+
                         <br />
                         <br />
                         <p align="center"> Jeśli czasowy ustal czas od-do: </p>
@@ -49,26 +49,33 @@
 
 
                         <div class="form-group">
-                            
-                                <input type="submit" value="Dodaj" class="btn btn-default" onclick="myFunction()" />
-                            
+
+                            <input type="submit" value="Dodaj" class="btn btn-default" onclick="myFunction()" />
+
                         </div>
                     </form>
                     <form asp-controller="Lekarz" asp-action="WizytyDodaj" method="get">
                         <a asp-action="WizytyDodaj" asp-route-idw="@Model.IdWizyty" asp-route-id="@Model.IdPacjent" asp-route-idl="@Model.IdLek">Przejdź do wizyty</a>
                     </form>
-                    </div></div></font></div></font>
-<br />
-<div align="center"> Po zatwierdzeniu przez naciśnięcie przycisku "Dodaj" możliwe jest dodanie kolejnego leku. W przypadku chęci zakończenia modyfikacji listy leków, należy wcisnąć przycisk "Przejdź do wizyty" i ponownie kliknąć przycisk "Dodaj" w celu ostatecznego dodania wizyty.
+                </div>
+            </div>
+        </font>
     </div>
+</font>
+<br />
+<div align="center">
+    Po zatwierdzeniu przez naciśnięcie przycisku "Dodaj" możliwe jest dodanie kolejnego leku. W przypadku chęci zakończenia modyfikacji listy leków, należy wcisnąć przycisk "Przejdź do wizyty" i ponownie kliknąć przycisk "Dodaj" w celu ostatecznego dodania wizyty.
+</div>
+
+
 
 <script>
-function myFunction() {
-    alert("Lek został dodany");
-}
+    function myFunction() {
+        alert("Lek został dodany");
+    }
 </script>
 
-                    @section Scripts {
-                        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-                    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
