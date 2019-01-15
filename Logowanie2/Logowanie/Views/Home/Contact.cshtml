@@ -51,9 +51,10 @@
     @{
 
 
-        foreach (var item in Model)
+        foreach (var item in Model.Reverse())
         {
-
+            if (!(item.Opis == null) || item.Zalecenia != null)
+            {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.DataWizyty)
@@ -69,7 +70,7 @@
                 <a asp-action="Privacy" asp-route-idw="@item.IdWizyty" asp-route-id="@item.IdPacjent">Leki</a>
             </form>
         </td>
-        
+        }
     </tr>
 
         }
