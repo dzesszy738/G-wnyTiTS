@@ -16,13 +16,13 @@
             string nazwisko;
             string date;
             string telefon;
-            
+
             string uczulenia;
         }
 
         @{ if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
             {
-               
+
                 imie = Model.Imie;
                 nazwisko = Model.Nazwisko;
                 date = Model.DataUr.ToShortDateString();
@@ -34,7 +34,7 @@
 
             else
             {
-                
+
                 imie = " ";
                 nazwisko = "";
                 date = "";
@@ -42,12 +42,57 @@
                 uczulenia = "";
             }
         }
-        
-        Imię: <b>@imie</b>
-        <br />Nazwisko: <b>@nazwisko</b>
-        <br />Data urodzenia: <b>@date</b>
-        <br />Numer telefonu: <b>@telefon</b>
-        <br />Uczulenia: <b>@uczulenia</b>
+
+              <table class="table">
+                  <tr>
+                      <th>
+                          Imię
+                      </th>
+                      <th>
+                          Nazwisko
+                      </th>
+                      <th>
+                          Data urodzenia
+                      </th>
+                      <th>
+                          Numer telefonu
+                      </th>
+                      <th>Uczulenia</th>
+                  </tr>
+
+                  <tr>
+
+
+                      <td>
+                          @imie
+                      </td>
+                      <td>
+                          @nazwisko
+                      </td>
+                      <td>
+                          @date
+                      </td>
+                      <td>
+                          @telefon
+                      </td>
+                      <td>
+                          @uczulenia
+                      </td>
+
+
+                  </tr>
+              </table>
+
+            @*Imię:
+            <b>@imie</b>
+            <br />Nazwisko:
+            <b>@nazwisko</b>
+            <br />Data urodzenia:
+            <b>@date</b>
+            <br />Numer telefonu:
+            <b>@telefon</b>
+            <br />Uczulenia:
+            <b>@uczulenia</b>*@
 
 
 
