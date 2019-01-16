@@ -36,6 +36,9 @@
             <th>
                 Imię
             </th>
+            <th>
+                Uczulenia
+            </th>
             <th>Wizyty</th>
         </tr>
         @{
@@ -44,9 +47,9 @@
         foreach (var item in Model)
         {
 
-            <tr>
-                @if (item.Pesel != 0)
-                {
+        <tr>
+            @if (item.Pesel != 0)
+            {
                 <td>
                     @Html.DisplayFor(modelItem => item.Pesel)
                 </td>
@@ -57,16 +60,19 @@
                     @Html.DisplayFor(modelItem => item.Imie)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Uczulenia)
+                </td>
+                <td>
                     <form asp-controller="Lekarz" asp-action="Wizyty" method="get">
                         <a asp-action="Wizyty" asp-route-id="@item.IdPacjent">Wyszukaj wizyte</a>
                     </form>
                     <form asp-controller="Lekarz" asp-action="WizytyDodaj" method="get">
                         <a asp-action="WizytyDodaj" asp-route-id="@item.IdPacjent">Dodaj wizyte</a>
                     </form>
-                   
+
                 </td>
-                }
-            </tr>
+            }
+        </tr>
 
         }
 

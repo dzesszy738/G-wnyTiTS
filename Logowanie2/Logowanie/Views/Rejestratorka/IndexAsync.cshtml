@@ -45,6 +45,12 @@
                     <td width="300">
                         <b> Imię </b>
                     </td>
+                    <td width="300">
+                        <b> Numer telefonu </b>
+                    </td>
+                    <td width="300">
+                        <b> Uczulenia </b>
+                    </td>
                     <th></th>
                 </tr>
 
@@ -54,20 +60,26 @@
                     foreach (var item in Model)
                     {
 
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nazwisko)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Imie)
-                            </td>
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.IdPacjent">Edytuj</a>
-                            </td>
-                        </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nazwisko)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Imie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Uczulenia)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdPacjent">Edytuj</a>
+                    </td>
+                </tr>
 
                     }
 

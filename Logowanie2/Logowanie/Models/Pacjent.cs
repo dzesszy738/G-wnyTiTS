@@ -38,6 +38,12 @@ namespace Logowanie.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Display(Name ="Numer telefonu")]
+        public string Telefon { get; set; }
+
+        [Display(Name ="Uczulenia")]
+        public string Uczulenia { get; set; }
+
         public ICollection<Leki> Leki { get; set; }
         public ICollection<Wizyty> Wizyty { get; set; }
 

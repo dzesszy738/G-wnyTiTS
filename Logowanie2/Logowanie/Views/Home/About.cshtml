@@ -9,31 +9,47 @@
         </div>
     <hr />
     <font size="4">
-    <br/><br />
+        <br /><br />
 
         @{
             string imie;
             string nazwisko;
             string date;
+            string telefon;
+            
+            string uczulenia;
         }
 
         @{ if (User.HasClaim(ClaimTypes.Role, "Pacjent"))
-                {
-                    imie = Model.Imie;
-                    nazwisko = Model.Nazwisko;
-                    date = Model.DataUr.ToShortDateString();
-                }
+            {
+               
+                imie = Model.Imie;
+                nazwisko = Model.Nazwisko;
+                date = Model.DataUr.ToShortDateString();
+                telefon = Model.Telefon;
+                uczulenia = Model.Uczulenia;
 
-                else
-                {
-                    imie = " ";
-                    nazwisko = "";
-                    date = "";
-                }
+
             }
-            Imię: <b>@imie</b>
+
+            else
+            {
+                
+                imie = " ";
+                nazwisko = "";
+                date = "";
+                telefon = " ";
+                uczulenia = "";
+            }
+        }
+        
+        Imię: <b>@imie</b>
         <br />Nazwisko: <b>@nazwisko</b>
         <br />Data urodzenia: <b>@date</b>
+        <br />Numer telefonu: <b>@telefon</b>
+        <br />Uczulenia: <b>@uczulenia</b>
+
+
 
 
 

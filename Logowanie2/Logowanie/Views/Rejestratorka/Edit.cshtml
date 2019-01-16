@@ -13,7 +13,7 @@
 
         <form asp-action="Edit">
             <div class="form-horizontal">
-                
+
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="IdPacjent" />
@@ -47,9 +47,23 @@
                     </div>
                 </div>
                 <div class="form-group">
-                   <div align="center">
-                       <b> <input type="submit" value="Zapisz" class="btn btn-default" /></b>
-                   </div>
+                    <label asp-for="Telefon" class="col-md-2 control-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="Telefon" class="form-control" />
+                        <span asp-validation-for="Telefon" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Uczulenia" class="col-md-2 control-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="Uczulenia" class="form-control" />
+                        <span asp-validation-for="Uczulenia" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div align="center">
+                        <b> <input type="submit" value="Zapisz" class="btn btn-default" /></b>
+                    </div>
                 </div>
             </div>
         </form>
